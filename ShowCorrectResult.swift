@@ -15,7 +15,9 @@ public class ShowCorrectResult {
    
     
     public class func showLimitingResult (resultAsFirstNumber : Double, maxLength: Int) ->  String {
-      
+        if maxLength < 6 {
+            return "incorrect max length of display"
+        } else {
         
         let formatter = NSNumberFormatter()
         formatter.decimalSeparator = "."
@@ -103,7 +105,8 @@ public class ShowCorrectResult {
             
             
         }
-            
+        
+        
 
 
             
@@ -113,7 +116,7 @@ public class ShowCorrectResult {
             }
             
       }
-
+    }
     init () {
         
     }

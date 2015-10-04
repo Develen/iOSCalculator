@@ -22,11 +22,7 @@ class CalculatorTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(false, "Chmiachki!")
-    }
+ 
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
@@ -76,17 +72,35 @@ class CalculatorTests: XCTestCase {
         XCTAssert(ShowCorrectResult.showLimitingResult(0.0000000000000867, maxLength: 14) == "8.7E-14", "too small number with decimal 0 more than maxlength")
     }
     
+    func testShowCorrectResult_exactlyNumbers() {
+        
+        XCTAssert(ShowCorrectResult.showLimitingResult(0, maxLength: 7) == "0", " round small number")
+        
+        XCTAssert(ShowCorrectResult.showLimitingResult(-1.00, maxLength: 14) == "-1", "too small number with large decimal")
+        
+        XCTAssert(ShowCorrectResult.showLimitingResult(100, maxLength: 14) == "100", "too small number with decimal 0 more than maxlength")
+    }
+    
+    
+    func testShowCorrectResult_maxAndMinDoubleNumber() {
+        
+        
+        XCTAssert(ShowCorrectResult.showLimitingResult(DBL_MAX, maxLength: 10) == "large number", " max double")
+        XCTAssert(ShowCorrectResult.showLimitingResult(DBL_MIN, maxLength: 14) == "2.2E-308", "min double")
+        
+    }
+    
+    
+    func testShowCorrectResult_impossibleErrors() {
+       XCTAssert(ShowCorrectResult.showLimitingResult(56.399887455, maxLength: 5) == "incorrect max length of display", " maxlength less than 5")
+        XCTAssert(ShowCorrectResult.showLimitingResult(56.399887455, maxLength: -4) == "incorrect max length of display", " negative maxlength")
+              XCTAssert(ShowCorrectResult.showLimitingResult(548763235689744132365678987543568784646576768898965, maxLength: 10) == "large number", "too large number of integer")
+    }
+    
 
     
 
-//    func testShowCorrectResult_returnesError() {
-//        var x = ShowCorrectResult.showLimitingResult(44.34322224252233, maxLength: -1)
-//        XCTAssert(ShowCorrectResult.showLimitingResult(44.34322224252233, maxLength: -1) == "incorrect", "Pass")
-//        XCTAssert(ShowCorrectResult.showLimitingResult(44.3432, maxLength: 0) == "incorrect", "Pass")
-//        
-//    }
-   
-    
+ 
     
     
 }
