@@ -38,7 +38,7 @@ class Calculator {
     
     func sendNumber(number: Int) {
         
-        if number > 9 || number < 0 {
+        if number > CalculatorConstants.maxNumberOfButton || number < CalculatorConstants.minNumberOfButton {
             return
         }
         
@@ -56,7 +56,7 @@ class Calculator {
                 firstNumber = "\(number)"
                 amountForDisplay = firstNumber
             } else {
-                firstNumber = LimitForDispaly.limitDisplay(firstNumber, number: number, maxLength: 7)
+                firstNumber = LimitForDispaly.limitDisplay(firstNumber, number: number, maxLength: CalculatorConstants.maxLengthForNumber)
                 amountForDisplay = firstNumber
             }
             
@@ -65,7 +65,7 @@ class Calculator {
                 secondNumber = "\(number)"
                 amountForDisplay = secondNumber
             } else {
-                secondNumber = LimitForDispaly.limitDisplay(secondNumber, number: number, maxLength: 7)
+                secondNumber = LimitForDispaly.limitDisplay(secondNumber, number: number, maxLength: CalculatorConstants.maxLengthForNumber)
                 amountForDisplay = secondNumber
             }
             
@@ -83,7 +83,7 @@ class Calculator {
             }
             
         default:
-            return
+            return //TODO: use exceptions
         }
         
     }
@@ -99,7 +99,7 @@ class Calculator {
                 currentState = .continueCounting
                 
             default:
-                return
+                return //TODO: use exceptions
                 
             }
             
@@ -113,7 +113,7 @@ class Calculator {
                 point = false
                 
             default:
-                return
+                return //TODO: use exceptions
             }
             
         case .fillingSecondNumber:
@@ -134,7 +134,7 @@ class Calculator {
                
                 
             default:
-                return
+                return //TODO: use exceptions
             }
             
         case .continueCounting:
@@ -144,11 +144,11 @@ class Calculator {
                 arithmeticCommand = calculationCommand
                 
             default:
-                return
+                return //TODO: use exceptions
             }
             
         default:
-            return
+            return //TODO: use exceptions
         }
     }
     
@@ -183,7 +183,7 @@ class Calculator {
             if firstNumber == "" {
                 return ""
             } else {
-                return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: 13)
+                return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: CalculatorConstants.maxLengthForDisplay)
                
             }
             
@@ -194,7 +194,7 @@ class Calculator {
             return amountForDisplay
             
         case .continueCounting:
-            return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: 13)
+            return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: CalculatorConstants.maxLengthForDisplay)
         
         default:
             return ""

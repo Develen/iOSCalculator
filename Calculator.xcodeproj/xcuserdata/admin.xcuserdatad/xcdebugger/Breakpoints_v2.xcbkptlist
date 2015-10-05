@@ -57,7 +57,7 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RemoveNumber.swift"
+            filePath = "Calculator/RemoveNumber.swift"
             timestampString = "465731049.750678"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"

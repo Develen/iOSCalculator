@@ -12,10 +12,13 @@ private eto opposit dlya public tolko vnutri etogo classa
 import Foundation
 
 public class ShowCorrectResult {
+    
+    private static let minLengthForStringResult = 6
    
     
-    public class func showLimitingResult (resultAsFirstNumber : Double, maxLength: Int) ->  String {
-        if maxLength < 6 || maxLength > 13 {
+    public static func showLimitingResult (resultAsFirstNumber : Double, maxLength: Int) ->  String {
+        if maxLength < minLengthForStringResult           //|| maxLength > CalculatorConstants.maxLengthForDisplay
+        {
             return "incorrect max length of display"
         } else {
         

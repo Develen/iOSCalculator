@@ -34,12 +34,12 @@ class CalculatorTests: XCTestCase {
     func testShowCorrectResult_decimal() {
        
         XCTAssert(ShowCorrectResult.showLimitingResult(44.34322224252233, maxLength: 10) == "44.3432222", "decimal")
-        XCTAssert(ShowCorrectResult.showLimitingResult(44.2468, maxLength: 5) == "44.25", "decimal with round")
+        XCTAssert(ShowCorrectResult.showLimitingResult(44.24688, maxLength: 7) == "44.2469", "decimal with round")
 
     }
       func testShowCorrectResult_negativeDecimal() {
     XCTAssert(ShowCorrectResult.showLimitingResult(-44.34322224252233, maxLength: 10) == "-44.343222", "negative decimal")
-    XCTAssert(ShowCorrectResult.showLimitingResult(-24.0668, maxLength: 6) == "-24.07", "negative decimal with round")
+    XCTAssert(ShowCorrectResult.showLimitingResult(-24.0668, maxLength: 7) == "-24.067", "negative decimal with round")
     }
     
     func testShowCorrectResult_integer() {
@@ -60,25 +60,25 @@ class CalculatorTests: XCTestCase {
         
         XCTAssert(ShowCorrectResult.showLimitingResult(-0.00078, maxLength: 7) == "-0.0008", "negative round small number")
         
-        XCTAssert(ShowCorrectResult.showLimitingResult(-0.00001905197341, maxLength: 14) == "-0.00001905197", "negative too small number with large decimal")
-        XCTAssert(ShowCorrectResult.showLimitingResult(-0.000000000000867, maxLength: 14) == "-8.7E-13", "negative too small number with decimal 0 more than maxlength")
+        XCTAssert(ShowCorrectResult.showLimitingResult(-0.00001905177341, maxLength: 13) == "-0.0000190518", "negative too small number with large decimal")
+        XCTAssert(ShowCorrectResult.showLimitingResult(-0.000000000000867, maxLength: 13) == "-8.7E-13", "negative too small number with decimal 0 more than maxlength")
            }
     func testShowCorrectResult_tooSmallNumber() {
        
         XCTAssert(ShowCorrectResult.showLimitingResult(0.000078, maxLength: 7) == "0.00008", " round small number")
         
-        XCTAssert(ShowCorrectResult.showLimitingResult(0.000001905197341, maxLength: 14) == "0.000001905197", "too small number with large decimal")
+        XCTAssert(ShowCorrectResult.showLimitingResult(0.000001905191341, maxLength: 13) == "0.00000190519", "too small number with large decimal")
    
-        XCTAssert(ShowCorrectResult.showLimitingResult(0.0000000000000867, maxLength: 14) == "8.7E-14", "too small number with decimal 0 more than maxlength")
+        XCTAssert(ShowCorrectResult.showLimitingResult(0.0000000000000867, maxLength: 13) == "8.7E-14", "too small number with decimal 0 more than maxlength")
     }
     
     func testShowCorrectResult_exactlyNumbers() {
         
         XCTAssert(ShowCorrectResult.showLimitingResult(0, maxLength: 7) == "0", " round small number")
         
-        XCTAssert(ShowCorrectResult.showLimitingResult(-1.00, maxLength: 14) == "-1", "too small number with large decimal")
+        XCTAssert(ShowCorrectResult.showLimitingResult(-1.00, maxLength: 13) == "-1", "too small number with large decimal")
         
-        XCTAssert(ShowCorrectResult.showLimitingResult(100, maxLength: 14) == "100", "too small number with decimal 0 more than maxlength")
+        XCTAssert(ShowCorrectResult.showLimitingResult(100, maxLength: 13) == "100", "too small number with decimal 0 more than maxlength")
     }
     
     
@@ -86,7 +86,7 @@ class CalculatorTests: XCTestCase {
         
         
         XCTAssert(ShowCorrectResult.showLimitingResult(DBL_MAX, maxLength: 10) == "large number", " max double")
-        XCTAssert(ShowCorrectResult.showLimitingResult(DBL_MIN, maxLength: 14) == "2.2E-308", "min double")
+        XCTAssert(ShowCorrectResult.showLimitingResult(DBL_MIN, maxLength: 13) == "2.2E-308", "min double")
         
     }
     
