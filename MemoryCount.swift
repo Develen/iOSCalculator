@@ -12,23 +12,16 @@ class MemoryCount {
     
     class func memoryCounting (memoryNumber: Double, memoryResult: Double, arithmeticMemoryCommand: CommandForMemory) -> Double {
        
-                if arithmeticMemoryCommand == .plus {
-                
+        switch arithmeticMemoryCommand {
+        case .plus:
                 return memoryResult + memoryNumber
+        case .minus:
+        return memoryResult - memoryNumber
+        case .equalMemory:
+               return memoryResult
                 
-            } else if arithmeticMemoryCommand == .minus {
-                return memoryResult - memoryNumber
-                
-            } else if arithmeticMemoryCommand == .equalMemory {
-                
-                return memoryResult
-            }
-            else {
-                return 0.0
+        default:
+            return 0
         }
-       
-        
     }
-    
 }
-    

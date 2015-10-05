@@ -51,6 +51,8 @@ class ViewController: UIViewController {
             choosenOperator = .multiplication
         }else if operatorTag == 1004 {
             choosenOperator = .division
+        } else {
+            return
         }
         
         calculatorMethods.runCommand(choosenOperator)
@@ -95,30 +97,52 @@ class ViewController: UIViewController {
     
 
     
-//    @IBAction func memoryPressed(sender: UIButton) {
-//   var memoryTag = sender.tag
-//        var memoryAction = CommandForMemory()
-//      
-//        
-//        if memoryTag == 1010 {
-//            memoryAction = .plus
-//        } else if memoryTag == 1011 {
-//            memoryAction = .minus
-//        } else if memoryTag == 1012 {
-//            memoryAction = .equalMemory
-//     
-//        } else {
-//            calculatorMethods.removeAllMemory()
-//        }
-//        calculatorMethods.memory(memoryAction)
-//        result.text = calculatorMethods.showDisplay()
-//        
-//        
-//    }
-//    
-//    @IBAction func equalMemoryPressed(sender: UIButton) {
-//        result.text = calculatorMethods.showMemoryDisplay()
-//    }
+    @IBAction func memoryPressed(sender: UIButton) {
+   var memoryTag = sender.tag
+        var memoryAction = CommandForMemory()
+      
+        
+        if memoryTag == 1010 {
+            memoryAction = .plus
+        } else if memoryTag == 1011 {
+            memoryAction = .minus
+        } else {
+            return
+        }
+        calculatorMethods.memory(memoryAction)
+        result.text = calculatorMethods.showDisplay()
+        
+        
+    }
+
+    @IBAction func equalMemoryPressed(sender: UIButton) {
+        result.text = calculatorMethods.showMemoryDisplay()
+    }
+    
+    
+    @IBAction func memoryClean(sender: UIButton) {
+          calculatorMethods.cleanAllMemory()
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
     
 

@@ -15,7 +15,7 @@ public class ShowCorrectResult {
    
     
     public class func showLimitingResult (resultAsFirstNumber : Double, maxLength: Int) ->  String {
-        if maxLength < 6 {
+        if maxLength < 6 || maxLength > 13 {
             return "incorrect max length of display"
         } else {
         

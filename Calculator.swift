@@ -31,9 +31,9 @@ class Calculator {
         resultAsFirstNumber = 0
         amountForDisplay = ""
         point = false
-        //memoryNumber = 0
-        //memoryResult = 0
-        //arithmeticMemoryCommand = .none
+        memoryNumber = 0
+        memoryResult = 0
+        arithmeticMemoryCommand = .none
     }
     
     func sendNumber(number: Int) {
@@ -48,6 +48,8 @@ class Calculator {
             amountForDisplay = firstNumber
             secondNumber = ""
             currentState = .fillingFirstNumber
+            resultAsFirstNumber = (firstNumber as NSString).doubleValue
+            
             
         case .fillingFirstNumber:
             if firstNumber == "0" {
@@ -120,6 +122,7 @@ class Calculator {
             case .addition, .subtraction, .multiplication, .division:
                 if secondNumber == "" {
                     arithmeticCommand = calculationCommand
+                    currentState = .continueCounting
                 } else {
                
                 resultAsFirstNumber = LogicOfCalulation.calculateResult(resultAsFirstNumber, secondNumber: secondNumber, arithmeticCommand: arithmeticCommand)
@@ -157,10 +160,16 @@ class Calculator {
         case .fillingFirstNumber:
             return
         case .fillingSecondNumber:
+            if secondNumber == "" {
+            currentState = .begin
+                arithmeticCommand = .none
+            } else {
+            
             resultAsFirstNumber = LogicOfCalulation.calculateResult(resultAsFirstNumber, secondNumber: secondNumber, arithmeticCommand: arithmeticCommand)
             amountForDisplay = "\(resultAsFirstNumber)"
             currentState = .begin
             point = false
+            }
         case .continueCounting:
             currentState = .begin
             arithmeticCommand = .none
@@ -174,7 +183,7 @@ class Calculator {
             if firstNumber == "" {
                 return ""
             } else {
-                return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: 14)
+                return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: 13)
                
             }
             
@@ -185,7 +194,7 @@ class Calculator {
             return amountForDisplay
             
         case .continueCounting:
-            return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: 14)
+            return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: 13)
         
         default:
             return ""
@@ -225,90 +234,99 @@ class Calculator {
         }
     }
     
-    func removingNumber () -> String {
+    func removingNumber () {
         
         switch currentState {
         case .begin:
-            if amountForDisplay == "" {
-                return ""
-            } else {
-        return amountForDisplay
-            }
+            return
+            
+
         case .fillingFirstNumber:
             if firstNumber == "" {
-                return ""
+                return
             } else {
             amountForDisplay = RemoveNumber.removeLastOne(firstNumber)
             firstNumber = amountForDisplay
-            return amountForDisplay
+            
             }
             
         case .fillingSecondNumber:
             if secondNumber == "" {
-                return ""
+                return
             } else {
             amountForDisplay = RemoveNumber.removeLastOne(secondNumber)
             secondNumber = amountForDisplay
-            return amountForDisplay
+          
             }
             
         case .continueCounting:
-            return amountForDisplay
+            
+//            if amountForDisplay == "" {
+//                return
+//            } else {
+//                amountForDisplay = RemoveNumber.removeLastOne(amountForDisplay)
+//                firstNumber = amountForDisplay
+//                resultAsFirstNumber = (amountForDisplay as NSString).doubleValue
+//            }
+//            
+         return
             
         default:
-            return ""
+            return
         }
     }
   
-    //    func memory(memoryCommand: CommandForMemory) -> Double {
-    //
-    //            switch currentState {
-    //            case .clean:
-    //                 memoryNumber = 0
-    //              arithmeticMemoryCommand = .none
-    //                  memoryResult = 0
-    //                return  memoryResult
-    //
-    //            case .fillingFirstNumber:
-    //                memoryNumber = (firstNumber as NSString).doubleValue
-    //                memoryResult = MemoryCount.memoryCounting(memoryNumber, memoryResult: memoryResult, arithmeticMemoryCommand: memoryCommand)
-    //                return memoryResult
-    //
-    //                case .fillingSecondNumber:
-    //                result = LogicOfCalulation.calculateResult(firstNumber, secondNumber: secondNumber, arithmeticCommand: arithmeticCommand)
-    //                memoryNumber = (result as NSString).doubleValue
-    //                memoryResult = MemoryCount.memoryCounting(memoryNumber, memoryResult: memoryResult, arithmeticMemoryCommand: memoryCommand)
-    //                currentState = .showingResult
-    //                showDisplay()
-    //               return memoryResult
-    //
-    //            case .showingResult:
-    //                return memoryResult
-    //
-    //
-    //            default:
-    //                return memoryResult
-    //
-    //
-    //        }
-    //
-    //    }
+        func memory(memoryCommand: CommandForMemory) {
     
-    //    func removeAllMemory() {
-    //        memoryNumber = 0
-    //        memoryResult = 0
-    //        arithmeticMemoryCommand = .none
-    //        result = "kiss you!"
-    //    }
-    //    func showMemoryDisplay() -> String {
-    //
-    //       var newResult = "\(memoryResult)"
-    //      newResult = ShowCorrectResult.correctResult(newResult)
-    //
-    //            return newResult
-    //
-    //       
-    //    }
+                switch currentState {
+                case .begin:
+                     memoryNumber = resultAsFirstNumber
+                  //arithmeticMemoryCommand = memoryCommand
+                      memoryResult = MemoryCount.memoryCounting(memoryNumber, memoryResult: memoryResult, arithmeticMemoryCommand: memoryCommand)
+                    amountForDisplay = "\(memoryResult)"
+                    
+                case .fillingFirstNumber:
+                    memoryNumber = (amountForDisplay as NSString).doubleValue
+                    memoryResult = MemoryCount.memoryCounting(memoryNumber, memoryResult: memoryResult, arithmeticMemoryCommand: memoryCommand)
+                    currentState = .begin
+                   
+                case .fillingSecondNumber:
+                    memoryNumber = LogicOfCalulation.calculateResult(resultAsFirstNumber, secondNumber: secondNumber, arithmeticCommand: arithmeticCommand)
+                    resultAsFirstNumber = memoryNumber
+                       memoryResult = MemoryCount.memoryCounting(memoryNumber, memoryResult: memoryResult, arithmeticMemoryCommand: memoryCommand)
+                
+                    currentState = .begin
+                    
+                  
+                 
+    
+                case .continueCounting:
+                memoryNumber = resultAsFirstNumber
+                     memoryResult = MemoryCount.memoryCounting(memoryNumber, memoryResult: memoryResult, arithmeticMemoryCommand: memoryCommand)
+                    currentState = .begin
+    
+    
+                default:
+                    return 
+    
+    
+            }
+    
+        }
+    
+        func cleanAllMemory() {
+            memoryNumber = 0
+            memoryResult = 0
+            arithmeticMemoryCommand = .none
+           
+        }
+        func showMemoryDisplay() -> String {
+            resultAsFirstNumber = memoryResult
+    
+        return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: 13)
+    
+           
+        }
 }
 
 
