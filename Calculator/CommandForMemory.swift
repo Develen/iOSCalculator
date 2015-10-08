@@ -8,11 +8,12 @@
 
 import Foundation
 
-enum CommandForMemory {
+public enum CommandForMemory {
     
     case plus
     case minus
     case equalMemory
+    case clean
     case none
     
     init () {

@@ -9,7 +9,7 @@
 import Foundation
 
 class LimitForDispaly {
-    class func limitDisplay (operandNumber: String, number: Int, maxLength: Int) -> String {
+    static func limitDisplay (operandNumber: String, number: Int, maxLength: Int) -> String {
         
         if count(operandNumber) < maxLength {
             return operandNumber + "\(number)"

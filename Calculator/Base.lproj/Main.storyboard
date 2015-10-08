@@ -20,13 +20,19 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k5e-ct-3d9">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QV1-Sc-Jbg">
-                                        <rect key="frame" x="0.0" y="92" width="320" height="50"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QV1-Sc-Jbg">
+                                        <rect key="frame" x="0.0" y="89" width="320" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="QV1-Sc-Jbg" secondAttribute="height" multiplier="32:5" id="ynh-rC-vtE"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="40"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgA-Zu-AnI">
+                                        <rect key="frame" x="0.0" y="84" width="21" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -235,7 +241,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="equalMemoryPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="dcy-59-ufg"/>
+                                    <action selector="memoryPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="hYg-q7-TDp"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1005" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CIm-iB-uJe">
@@ -265,7 +271,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="memoryClean:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="xtD-AF-lbw"/>
+                                    <action selector="memoryPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="bk3-OM-d9R"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -348,6 +354,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="label" destination="rgA-Zu-AnI" id="xWO-dE-BTm"/>
                         <outlet property="result" destination="QV1-Sc-Jbg" id="k8v-3y-cMP"/>
                     </connections>
                 </viewController>

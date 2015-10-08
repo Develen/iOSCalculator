@@ -11,7 +11,7 @@ import XCTest
 import Calculator
 
 
-class CalculatorTests: XCTestCase {
+class ShowCorrectResultTest: XCTestCase {
     
     override func setUp() {
         super.setUp()

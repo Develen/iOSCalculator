@@ -7,10 +7,10 @@
 //
 
 import Foundation
-public class CalculatorConstants {
-    public static let maxLengthForDisplay = 13
-    public static let maxLengthForNumber = 7
-    public static let maxNumberOfButton = 9
-     public static let minNumberOfButton = 0
+ class CalculatorConstants {
+     static let maxLengthForDisplay = 13
+     static let maxLengthForNumber = 7
+     static let maxNumberOfButton = 9
+      static let minNumberOfButton = 0
     
 }

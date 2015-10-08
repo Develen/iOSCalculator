@@ -12,8 +12,10 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var result: UILabel!
     
+    @IBOutlet weak var label: UILabel!
     
     var calculatorMethods = Calculator()
+    
    
     
     
@@ -75,6 +77,7 @@ class ViewController: UIViewController {
     @IBAction func clearPressed(sender: AnyObject) {
         
         calculatorMethods.clearAll()
+        label.text = calculatorMethods.showLabel()
         result.text = calculatorMethods.showDisplay()
           }
     
@@ -106,41 +109,23 @@ class ViewController: UIViewController {
             memoryAction = .plus
         } else if memoryTag == 1011 {
             memoryAction = .minus
+        } else if memoryTag == 1012{
+            memoryAction = .equalMemory
+        } else if memoryTag == 1013 {
+            memoryAction = .clean
         } else {
             return
         }
         calculatorMethods.memory(memoryAction)
+        label.text = calculatorMethods.showLabel()
+        
         result.text = calculatorMethods.showDisplay()
         
         
     }
 
-    @IBAction func equalMemoryPressed(sender: UIButton) {
-        result.text = calculatorMethods.showMemoryDisplay()
-    }
-    
-    
-    @IBAction func memoryClean(sender: UIButton) {
-          calculatorMethods.cleanAllMemory()
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
     
     
 }

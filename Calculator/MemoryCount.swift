@@ -9,17 +9,15 @@
 import Foundation
 
 class MemoryCount {
-    
-    class func memoryCounting (memoryNumber: Double, memoryResult: Double, arithmeticMemoryCommand: CommandForMemory) -> Double {
+   
+     static func memoryCounting (memoryNumber: Double, memoryResult: Double, arithmeticMemoryCommand: CalculationCommand) -> Double {
        
         switch arithmeticMemoryCommand {
-        case .plus:
+        case .addition:
                 return memoryResult + memoryNumber
-        case .minus:
+        case .subtraction:
         return memoryResult - memoryNumber
-        case .equalMemory:
-               return memoryResult
-                
+                     
         default:
             return 0
         }

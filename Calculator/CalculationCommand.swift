@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum CalculationCommand {
+public enum CalculationCommand {
     case addition
     case subtraction
     case multiplication
