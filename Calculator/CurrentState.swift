@@ -11,8 +11,9 @@ import Foundation
 enum CurrentState {
     case begin
     case fillingFirstNumber
+    case operationPressed
     case fillingSecondNumber
-    case continueCounting
+
    
 
     

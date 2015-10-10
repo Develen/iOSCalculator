@@ -5,39 +5,28 @@
 //  Created by Admin on 19.09.15.
 //  Copyright (c) 2015 Admin. All rights reserved.
 //
-
 import Foundation
 
 public class Calculator {
-    //5M+  + 6 M- + 3M+ MR = 8
-    private var firstNumber = ""
+    private var firstNumber = "0"
     private var secondNumber = ""
-    private var amountForDisplay = ""
     private var arithmeticCommand = CalculationCommand()
     private var currentState = CurrentState()
     private var resultAsFirstNumber: Double = 0
     private var point = false
     private var memory = Memory()
-//    private var memoryNumber: Double = 0
-//    private var memoryResult: Double = 0
-//    private var arithmeticMemoryCommand = CommandForMemory()
- 
+    
     public init() {
-        
     }
-   
+    
     public func clearAll () {
-        firstNumber = ""
+        firstNumber = "0"
         secondNumber = ""
         arithmeticCommand = .none
         currentState = .begin
         resultAsFirstNumber = 0
-        amountForDisplay = ""
         point = false
         memory.cleanAllMemory()
-//        memoryNumber = 0
-//        memoryResult = 0
-//        arithmeticMemoryCommand = .none
     }
     
     public func sendNumber(number: Int) {
@@ -48,44 +37,39 @@ public class Calculator {
         
         switch currentState {
         case .begin:
+            if firstNumber == "-0.0" {
+                firstNumber = "\((number) * (-1))"
+                 resultAsFirstNumber = (firstNumber as NSString).doubleValue
+                 currentState = .fillingFirstNumber
+            } else {
             firstNumber = "\(number)"
-            amountForDisplay = firstNumber
             secondNumber = ""
             currentState = .fillingFirstNumber
             resultAsFirstNumber = (firstNumber as NSString).doubleValue
-            
+            }
             
         case .fillingFirstNumber:
-            if firstNumber == "0" {
-                firstNumber = "\(number)"
-                amountForDisplay = firstNumber
-            } else {
+//            if firstNumber == "0" {
+//                firstNumber = "\(number)"
+//                resultAsFirstNumber = (firstNumber as NSString).doubleValue
+//            } else {
                 firstNumber = LimitForDispaly.limitDisplay(firstNumber, number: number, maxLength: CalculatorConstants.maxLengthForNumber)
-                amountForDisplay = firstNumber
-            }
+                resultAsFirstNumber = (firstNumber as NSString).doubleValue
+            
+            
+        case .operationPressed:
+            secondNumber = "\(number)"
+            currentState = .fillingSecondNumber
+
             
         case .fillingSecondNumber:
             if secondNumber == "0" {
                 secondNumber = "\(number)"
-                amountForDisplay = secondNumber
             } else {
                 secondNumber = LimitForDispaly.limitDisplay(secondNumber, number: number, maxLength: CalculatorConstants.maxLengthForNumber)
-                amountForDisplay = secondNumber
             }
             
-        case .continueCounting:
-            if firstNumber == "" {
-               firstNumber = "\(number)"
-                amountForDisplay = firstNumber
-                resultAsFirstNumber = (amountForDisplay as NSString).doubleValue
-                currentState = .fillingFirstNumber
-                
-            } else {
-                secondNumber = "\(number)"
-                currentState = .fillingSecondNumber
-                amountForDisplay = secondNumber
-            }
-            
+
         default:
             return //TODO: use exceptions
         }
@@ -100,7 +84,7 @@ public class Calculator {
             switch calculationCommand {
             case .addition, .subtraction, .multiplication, .division:
                 arithmeticCommand = calculationCommand
-                currentState = .continueCounting
+                currentState = .operationPressed
                 
             default:
                 return //TODO: use exceptions
@@ -108,17 +92,18 @@ public class Calculator {
             }
             
         case .fillingFirstNumber:
-            resultAsFirstNumber = (firstNumber as NSString).doubleValue
             
             switch calculationCommand {
             case .addition, .subtraction, .multiplication, .division:
                 arithmeticCommand = calculationCommand
-                currentState = .fillingSecondNumber
+                currentState = .operationPressed
                 point = false
                 
             default:
                 return //TODO: use exceptions
             }
+        case .operationPressed:
+            arithmeticCommand = calculationCommand
             
         case .fillingSecondNumber:
             
@@ -126,22 +111,21 @@ public class Calculator {
             case .addition, .subtraction, .multiplication, .division:
                 if secondNumber == "" {
                     arithmeticCommand = calculationCommand
-                    currentState = .continueCounting
+                    currentState = .operationPressed
                 } else {
-               
-                resultAsFirstNumber = LogicOfCalulation.calculateResult(resultAsFirstNumber, secondNumber: secondNumber, arithmeticCommand: arithmeticCommand)
-                arithmeticCommand = calculationCommand
-                currentState = .continueCounting
-                amountForDisplay = "\(resultAsFirstNumber)"
-                point = false
+                    
+                    resultAsFirstNumber = LogicOfCalulation.calculateResult(resultAsFirstNumber, secondNumber: secondNumber, arithmeticCommand: arithmeticCommand)
+                    arithmeticCommand = calculationCommand
+                    currentState = .operationPressed
+                    point = false
                 }
-               
+                
                 
             default:
                 return //TODO: use exceptions
             }
             
-        case .continueCounting:
+        case .operationPressed:
             
             switch calculationCommand {
             case .addition, .subtraction, .multiplication, .division:
@@ -165,45 +149,73 @@ public class Calculator {
             return
         case .fillingSecondNumber:
             if secondNumber == "" {
-            currentState = .begin
+                currentState = .begin
                 arithmeticCommand = .none
             } else {
-            
-            resultAsFirstNumber = LogicOfCalulation.calculateResult(resultAsFirstNumber, secondNumber: secondNumber, arithmeticCommand: arithmeticCommand)
-            amountForDisplay = "\(resultAsFirstNumber)"
-            currentState = .begin
-            point = false
+                
+                resultAsFirstNumber = LogicOfCalulation.calculateResult(resultAsFirstNumber, secondNumber: secondNumber, arithmeticCommand: arithmeticCommand)
+                currentState = .begin
+                point = false
             }
-        case .continueCounting:
+        case .operationPressed:
             currentState = .begin
             arithmeticCommand = .none
+            
+        default:
+            return
         }
-    }
-    
-    // if static so problem with current state
-    public func showDisplay() -> String {
         
-             
+    }
+    public func positiveOrNegativeNumber () {
         switch currentState {
         case .begin:
-            if firstNumber == "" {
-                return ""
+            if firstNumber == "0" || firstNumber == "-0.0" {
+                firstNumber = "\((-1) * (firstNumber as NSString).doubleValue)"
+            resultAsFirstNumber = (firstNumber as NSString).doubleValue
             } else {
-                return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: CalculatorConstants.maxLengthForDisplay)
-               
+                 resultAsFirstNumber = (-1) * resultAsFirstNumber
+            }
+        case .fillingFirstNumber:
+            resultAsFirstNumber = (-1) * (firstNumber as NSString).doubleValue
+            firstNumber = "\(resultAsFirstNumber)"
+        case .operationPressed:
+            return
+        case .fillingSecondNumber:
+         secondNumber = "\((-1) * (secondNumber as NSString).doubleValue)"
+        default:
+            return
+        }
+    }
+    //new
+    
+    public func showDisplay() -> String {
+        
+        var currentNumber = getCurrentNumber()
+        
+        return ShowCorrectResult.showLimitingResult(currentNumber, maxLength: CalculatorConstants.maxLengthForDisplay)
+        
+    }
+    
+    
+    private func getCurrentNumber () -> Double {
+        
+        switch currentState {
+        case .begin:
+            if firstNumber == "0" {
+                return 0
+            } else {
+                return resultAsFirstNumber
+                
             }
             
-        case .fillingFirstNumber:
-            return amountForDisplay
+        case .fillingFirstNumber, .operationPressed:
+            return resultAsFirstNumber
             
         case .fillingSecondNumber:
-            return amountForDisplay
+            return (secondNumber as NSString).doubleValue
             
-        case .continueCounting:
-            return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: CalculatorConstants.maxLengthForDisplay)
-        
         default:
-            return ""
+            return 0
         }
     }
     
@@ -218,7 +230,7 @@ public class Calculator {
                 
             case .fillingFirstNumber:
                 firstNumber = firstNumber + "."
-                amountForDisplay = firstNumber
+                resultAsFirstNumber = (firstNumber as NSString).doubleValue
                 
             case .fillingSecondNumber:
                 if secondNumber == "" {
@@ -226,10 +238,10 @@ public class Calculator {
                     return
                 } else {
                     secondNumber = secondNumber + "."
-                    amountForDisplay = secondNumber
+                    
                 }
                 
-            case .continueCounting:
+            case .operationPressed:
                 point = false
                 
             default:
@@ -246,159 +258,65 @@ public class Calculator {
         case .begin:
             return
             
-
         case .fillingFirstNumber:
             if firstNumber == "" {
                 return
             } else {
-            amountForDisplay = RemoveNumber.removeLastOne(firstNumber)
-            firstNumber = amountForDisplay
-            
+                firstNumber = RemoveNumber.removeLastOne(firstNumber)
+                resultAsFirstNumber = (firstNumber as NSString).doubleValue
+                
             }
             
         case .fillingSecondNumber:
             if secondNumber == "" {
                 return
             } else {
-            amountForDisplay = RemoveNumber.removeLastOne(secondNumber)
-            secondNumber = amountForDisplay
-          
+                secondNumber = RemoveNumber.removeLastOne(secondNumber)
+                
+                
             }
             
-        case .continueCounting:
+        case .operationPressed:
             
-//            if amountForDisplay == "" {
-//                return
-//            } else {
-//                amountForDisplay = RemoveNumber.removeLastOne(amountForDisplay)
-//                firstNumber = amountForDisplay
-//                resultAsFirstNumber = (amountForDisplay as NSString).doubleValue
-//            }
-//            
-         return
+            return
             
         default:
             return
         }
     }
-  
-       public func memory(memoryCommand: CommandForMemory) {
-   
-        var currentNumber = 0.0
+    
+    public func memory(memoryCommand: CommandForMemory) {
         
-        switch currentState {
-        case .begin:
-            currentNumber = resultAsFirstNumber
-        case .fillingFirstNumber:
-            currentNumber = (amountForDisplay as NSString).doubleValue
-        case .fillingSecondNumber:
-            currentNumber = (amountForDisplay as NSString).doubleValue
-        case .continueCounting:
-         currentNumber = resultAsFirstNumber
-        default: return
-  }
-        
-            
+        let currentNumber = getCurrentNumber()
         
         switch memoryCommand{
         case .plus:
             memory.memoryManager(currentNumber, arithmeticMemoryCommand: .addition)
         case .minus:
-              memory.memoryManager(currentNumber, arithmeticMemoryCommand: .subtraction)
+            memory.memoryManager(currentNumber, arithmeticMemoryCommand: .subtraction)
         case .clean:
             memory.cleanAllMemory()
         case .equalMemory:
             switch currentState {
-             case .begin:
-            amountForDisplay = "\(memory.equalMemory())"
-             case .fillingFirstNumber:
-            currentState = .begin
+            case .begin:
+                resultAsFirstNumber = memory.equalMemory()
+            case .fillingFirstNumber:
+                currentState = .begin
             case .fillingSecondNumber:
-            resultAsFirstNumber = memory.equalMemory()
-             currentState = .begin
-            case .continueCounting:
-            resultAsFirstNumber = memory.equalMemory()
-            currentState = .begin
-        default: return
+                resultAsFirstNumber = memory.equalMemory()
+                currentState = .begin
+            case .operationPressed:
+                resultAsFirstNumber = memory.equalMemory()
+                currentState = .begin
+            default: return
             }
         default: return
             
         }
-            
-        }
+        
+    }
     
     public func showLabel () -> String {
-         return memory.showLabel()
-        }
-//             switch currentState {
-//               case .begin:
-//
-//                    memoryNumber = resultAsFirstNumber
-//                 //arithmeticMemoryCommand = memoryCommand
-//                     memoryResult = MemoryCount.memoryCounting(memoryNumber, memoryResult: memoryResult, arithmeticMemoryCommand: memoryCommand)
-//                   amountForDisplay = "\(memoryResult)"
-//                   
-//               case .fillingFirstNumber:
-//                   memoryNumber = (amountForDisplay as NSString).doubleValue
-//                   memoryResult = MemoryCount.memoryCounting(memoryNumber, memoryResult: memoryResult, arithmeticMemoryCommand: memoryCommand)
-//                   currentState = .begin
-//                  
-//               case .fillingSecondNumber:
-//                   memoryNumber = LogicOfCalulation.calculateResult(resultAsFirstNumber, secondNumber: secondNumber, arithmeticCommand: arithmeticCommand)
-//                   resultAsFirstNumber = memoryNumber
-//                      memoryResult = MemoryCount.memoryCounting(memoryNumber, memoryResult: memoryResult, arithmeticMemoryCommand: memoryCommand)
-//               
-//                   currentState = .begin
-//                   
-//                 
-//                
-//   
-//               case .continueCounting:
-//               memoryNumber = resultAsFirstNumber
-//                    memoryResult = MemoryCount.memoryCounting(memoryNumber, memoryResult: memoryResult, arithmeticMemoryCommand: memoryCommand)
-//                   currentState = .begin
-//   
-//   
-//               default:
-//                   return 
-   
-   
-//           }
-//   
-//       }
-//   
-//       public func cleanAllMemory() {
-//           memoryNumber = 0
-//           memoryResult = 0
-//           arithmeticMemoryCommand = .none
-//          
-//       }
-//       public func showMemoryDisplay() -> String {
-//           resultAsFirstNumber = memoryResult
-//   
-//       return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: 13)
-//   
-//          
-//       }
-//    
-//
-//    public func showLabel() -> String {
-//        if memoryResult != 0 {
-//            return "M"
-//        }else {
-//            return ""
-//        }
-//    }
+        return memory.showLabel()
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-

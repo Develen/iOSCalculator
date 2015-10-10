@@ -124,6 +124,11 @@ class ViewController: UIViewController {
         
     }
 
+    @IBAction func positiveOrNegativePressed(sender: UIButton) {
+        calculatorMethods.positiveOrNegativeNumber()
+        result.text = calculatorMethods.showDisplay()
+        
+    }
 
 
     

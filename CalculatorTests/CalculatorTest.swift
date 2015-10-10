@@ -24,18 +24,13 @@ class CalculatorTest: XCTestCase {
         self.calculator = Calculator()
     }
     
-    func testMemoryLabelAfterCleanAll() {
-       calculator.sendNumber(5)
-        calculator.memory(.plus)
-        calculator.runCommand(.addition)
-        calculator.sendNumber(6)
-        calculator.memory(.minus)
-        XCTAssert (calculator.showLabel() == "M", "MemoryLabelAfterCleanAll faild")
-        
+     func testDisplayedNumberAfterOperation() {
+        calculator.sendNumber(7)
+        calculator.runCommand(.multiplication)
+        var x = calculator.showDisplay()
+        XCTAssert (calculator.showDisplay() == "7", "Displayed NumberAfterOperation failed")
     }
-  
-  
-   
+    
     func testCalculator_SimpleAddition() {
         
         
@@ -195,8 +190,19 @@ class CalculatorTest: XCTestCase {
         XCTAssert(calculator.showDisplay() == "191.2", "removeSecondNumber result failed")
         
     }
+    func testCalculator_showingPoint() {
+        calculator.sendNumber(5)
+        calculator.sendNumber(4)
+        
+        calculator.showPoint()
+
+        XCTAssert(calculator.showDisplay() == "54.", "decimal result failed")
+        
+        
+    }
+
     
-    func testCalculator_decimalnumbers() {
+    func testCalculator_simpleCountingDecimalNumbers() {
         calculator.sendNumber(5)
         calculator.sendNumber(4)
         
@@ -218,6 +224,39 @@ class CalculatorTest: XCTestCase {
 
 
     }
-  
+    func testPointTwiceInTheFirstNumber() {
+        calculator.sendNumber(7)
+        calculator.sendNumber(8)
+        calculator.showPoint()
+        calculator.sendNumber(9)
+        calculator.showPoint()
+        XCTAssert (calculator.showDisplay() == "78.9", "PointTwiceInTheFirstNumber failed")
+    }
+    
+    func testPointTwiceInTheSecondNumber() {
+        calculator.sendNumber(5)
+        calculator.sendNumber(8)
+        calculator.showPoint()
+        calculator.sendNumber(9)
+        calculator.runCommand(.subtraction)
+        calculator.sendNumber(5)
+        calculator.showPoint()
+        calculator.sendNumber(2)
+        calculator.showPoint()
+        calculator.sendNumber(8)
+        XCTAssert (calculator.showDisplay() == "5.28", "PointTwiceInThSecondNumber failed")
+    }
+    
+    func testMemoryLabelAfterCleanAll() {
+        calculator.sendNumber(5)
+        calculator.memory(.plus)
+        calculator.runCommand(.addition)
+        calculator.sendNumber(6)
+        calculator.memory(.minus)
+        XCTAssert (calculator.showLabel() == "M", "MemoryLabelAfterCleanAll faild")
+        
+    }
+    
+    
 
 }

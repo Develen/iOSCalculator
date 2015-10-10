@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8442F3E51BC6F960005D11D6 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442F3E41BC6F960005D11D6 /* Memory.swift */; };
+		84081FDA1BC959B6009BF752 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84081FD91BC959B6009BF752 /* ViewController.swift */; };
 		8442F3E71BC70440005D11D6 /* MemoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442F3E61BC70440005D11D6 /* MemoryTest.swift */; };
+		8442F3EA1BC849E3005D11D6 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442F3E91BC849E3005D11D6 /* Memory.swift */; };
+		8442F3EC1BC84AE7005D11D6 /* MemoryCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442F3EB1BC84AE7005D11D6 /* MemoryCount.swift */; };
+		8442F3EE1BC84B14005D11D6 /* CommandForMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442F3ED1BC84B14005D11D6 /* CommandForMemory.swift */; };
 		84544DC31BC3169E00B7052A /* CalculatorContstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84544DC21BC3169E00B7052A /* CalculatorContstants.swift */; };
 		84544DC51BC3198300B7052A /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84544DC41BC3198300B7052A /* ErrorMessage.swift */; };
 		847627AA1BA7F82F0019843F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847627A91BA7F82F0019843F /* AppDelegate.swift */; };
-		847627AC1BA7F82F0019843F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847627AB1BA7F82F0019843F /* ViewController.swift */; };
 		847627AF1BA7F82F0019843F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847627AD1BA7F82F0019843F /* Main.storyboard */; };
 		847627B11BA7F82F0019843F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847627B01BA7F82F0019843F /* Images.xcassets */; };
 		847627B41BA7F82F0019843F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847627B21BA7F82F0019843F /* LaunchScreen.xib */; };
@@ -20,8 +22,6 @@
 		84AD30ED1BC4610500EA5891 /* CalculatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD30EC1BC4610500EA5891 /* CalculatorTest.swift */; };
 		84D6033E1BB542BF0063700B /* ShowCorrectResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6033D1BB542BF0063700B /* ShowCorrectResult.swift */; };
 		84D603401BB54D170063700B /* RemoveNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6033F1BB54D170063700B /* RemoveNumber.swift */; };
-		84D603421BB57BE60063700B /* CommandForMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D603411BB57BE60063700B /* CommandForMemory.swift */; };
-		84D603441BB57E460063700B /* MemoryCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D603431BB57E460063700B /* MemoryCount.swift */; };
 		84DD6F551BADE70E0092771F /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DD6F541BADE70E0092771F /* Calculator.swift */; };
 		84DD6F571BADE8740092771F /* CalculationCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DD6F561BADE8740092771F /* CalculationCommand.swift */; };
 		84DD6F591BADF1280092771F /* CurrentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DD6F581BADF1280092771F /* CurrentState.swift */; };
@@ -40,14 +40,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8442F3E41BC6F960005D11D6 /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
+		84081FD91BC959B6009BF752 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8442F3E61BC70440005D11D6 /* MemoryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryTest.swift; sourceTree = "<group>"; };
+		8442F3E91BC849E3005D11D6 /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
+		8442F3EB1BC84AE7005D11D6 /* MemoryCount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCount.swift; sourceTree = "<group>"; };
+		8442F3ED1BC84B14005D11D6 /* CommandForMemory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandForMemory.swift; sourceTree = "<group>"; };
 		84544DC21BC3169E00B7052A /* CalculatorContstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorContstants.swift; sourceTree = "<group>"; };
 		84544DC41BC3198300B7052A /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		847627A41BA7F82F0019843F /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		847627A81BA7F82F0019843F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		847627A91BA7F82F0019843F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		847627AB1BA7F82F0019843F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		847627AE1BA7F82F0019843F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		847627B01BA7F82F0019843F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		847627B31BA7F82F0019843F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -57,8 +59,6 @@
 		84AD30EC1BC4610500EA5891 /* CalculatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorTest.swift; sourceTree = "<group>"; };
 		84D6033D1BB542BF0063700B /* ShowCorrectResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowCorrectResult.swift; path = Calculator/ShowCorrectResult.swift; sourceTree = SOURCE_ROOT; };
 		84D6033F1BB54D170063700B /* RemoveNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoveNumber.swift; path = Calculator/RemoveNumber.swift; sourceTree = SOURCE_ROOT; };
-		84D603411BB57BE60063700B /* CommandForMemory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommandForMemory.swift; path = Calculator/CommandForMemory.swift; sourceTree = SOURCE_ROOT; };
-		84D603431BB57E460063700B /* MemoryCount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemoryCount.swift; path = Calculator/MemoryCount.swift; sourceTree = SOURCE_ROOT; };
 		84DD6F541BADE70E0092771F /* Calculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Calculator.swift; path = Calculator/Calculator.swift; sourceTree = SOURCE_ROOT; };
 		84DD6F561BADE8740092771F /* CalculationCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculationCommand.swift; sourceTree = "<group>"; };
 		84DD6F581BADF1280092771F /* CurrentState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CurrentState.swift; path = Calculator/CurrentState.swift; sourceTree = SOURCE_ROOT; };
@@ -84,12 +84,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8442F3E31BC6F8F4005D11D6 /* Memory */ = {
+		8442F3E81BC8493A005D11D6 /* Memory */ = {
 			isa = PBXGroup;
 			children = (
-				8442F3E41BC6F960005D11D6 /* Memory.swift */,
+				8442F3E91BC849E3005D11D6 /* Memory.swift */,
+				8442F3EB1BC84AE7005D11D6 /* MemoryCount.swift */,
+				8442F3ED1BC84B14005D11D6 /* CommandForMemory.swift */,
 			);
-			name = Memory;
+			path = Memory;
 			sourceTree = "<group>";
 		};
 		84544DC11BC3166D00B7052A /* Configurations */ = {
@@ -122,10 +124,10 @@
 		847627A61BA7F82F0019843F /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
-				8442F3E31BC6F8F4005D11D6 /* Memory */,
+				8442F3E81BC8493A005D11D6 /* Memory */,
 				84544DC11BC3166D00B7052A /* Configurations */,
 				847627A91BA7F82F0019843F /* AppDelegate.swift */,
-				847627AB1BA7F82F0019843F /* ViewController.swift */,
+				84081FD91BC959B6009BF752 /* ViewController.swift */,
 				847627AD1BA7F82F0019843F /* Main.storyboard */,
 				84DD6F541BADE70E0092771F /* Calculator.swift */,
 				84DD6F561BADE8740092771F /* CalculationCommand.swift */,
@@ -134,8 +136,6 @@
 				84E71BA91BB9D233007B3938 /* LimitForDisplay.swift */,
 				84D6033D1BB542BF0063700B /* ShowCorrectResult.swift */,
 				84D6033F1BB54D170063700B /* RemoveNumber.swift */,
-				84D603411BB57BE60063700B /* CommandForMemory.swift */,
-				84D603431BB57E460063700B /* MemoryCount.swift */,
 				847627B01BA7F82F0019843F /* Images.xcassets */,
 				847627B21BA7F82F0019843F /* LaunchScreen.xib */,
 				847627A71BA7F82F0019843F /* Supporting Files */,
@@ -273,17 +273,17 @@
 				84DD6F591BADF1280092771F /* CurrentState.swift in Sources */,
 				84E71BAA1BB9D233007B3938 /* LimitForDisplay.swift in Sources */,
 				84DD6F5D1BAECB4F0092771F /* LogicOfCalculation.swift in Sources */,
-				84D603421BB57BE60063700B /* CommandForMemory.swift in Sources */,
+				8442F3EA1BC849E3005D11D6 /* Memory.swift in Sources */,
+				84081FDA1BC959B6009BF752 /* ViewController.swift in Sources */,
+				8442F3EE1BC84B14005D11D6 /* CommandForMemory.swift in Sources */,
 				84544DC31BC3169E00B7052A /* CalculatorContstants.swift in Sources */,
 				84D6033E1BB542BF0063700B /* ShowCorrectResult.swift in Sources */,
 				84544DC51BC3198300B7052A /* ErrorMessage.swift in Sources */,
-				847627AC1BA7F82F0019843F /* ViewController.swift in Sources */,
 				84D603401BB54D170063700B /* RemoveNumber.swift in Sources */,
 				84DD6F571BADE8740092771F /* CalculationCommand.swift in Sources */,
-				8442F3E51BC6F960005D11D6 /* Memory.swift in Sources */,
 				847627AA1BA7F82F0019843F /* AppDelegate.swift in Sources */,
-				84D603441BB57E460063700B /* MemoryCount.swift in Sources */,
 				84DD6F551BADE70E0092771F /* Calculator.swift in Sources */,
+				8442F3EC1BC84AE7005D11D6 /* MemoryCount.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

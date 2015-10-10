@@ -20,19 +20,19 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k5e-ct-3d9">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QV1-Sc-Jbg">
-                                        <rect key="frame" x="0.0" y="89" width="320" height="50"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgA-Zu-AnI">
+                                        <rect key="frame" x="0.0" y="84" width="21" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QV1-Sc-Jbg">
+                                        <rect key="frame" x="0.0" y="90" width="320" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="QV1-Sc-Jbg" secondAttribute="height" multiplier="32:5" id="ynh-rC-vtE"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="40"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgA-Zu-AnI">
-                                        <rect key="frame" x="0.0" y="84" width="21" height="21"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -183,8 +183,8 @@
                                     <action selector="pointPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="CBW-mb-FIp"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y90-q9-bSw">
-                                <rect key="frame" x="0.0" y="488" width="160" height="80"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y90-q9-bSw">
+                                <rect key="frame" x="0.0" y="488" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="y90-q9-bSw" secondAttribute="height" multiplier="2:1" id="wQf-Oq-aep"/>
                                 </constraints>
@@ -205,16 +205,6 @@
                                 <state key="normal" title="+"/>
                                 <connections>
                                     <action selector="operatorPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="FnB-4n-lR8"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hwx-sn-F9i">
-                                <rect key="frame" x="80" y="248" width="80" height="80"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
-                                <state key="normal" title="8">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="numberPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="v6r-sO-pce"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mXo-L2-qR8">
@@ -272,6 +262,29 @@
                                 </state>
                                 <connections>
                                     <action selector="memoryPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="bk3-OM-d9R"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hwx-sn-F9i">
+                                <rect key="frame" x="80" y="248" width="80" height="80"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
+                                <state key="normal" title="8">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="numberPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="v6r-sO-pce"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U8e-4o-OfN">
+                                <rect key="frame" x="80" y="488" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="U8e-4o-OfN" secondAttribute="height" multiplier="2:1" id="S1O-Tp-scy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
+                                <state key="normal" title="(+/-)">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="positiveOrNegativePressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="qf6-g8-KD7"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -343,6 +356,7 @@
                             <constraint firstAttribute="trailing" secondItem="k5e-ct-3d9" secondAttribute="trailing" id="qbn-1J-68P"/>
                             <constraint firstItem="hwx-sn-F9i" firstAttribute="leading" secondItem="mbB-by-ZR9" secondAttribute="trailing" id="tgX-Q8-DNR"/>
                             <constraint firstItem="mbB-by-ZR9" firstAttribute="width" secondItem="hwx-sn-F9i" secondAttribute="height" multiplier="1:1" id="uee-oz-zzt"/>
+                            <constraint firstItem="U8e-4o-OfN" firstAttribute="width" secondItem="U8e-4o-OfN" secondAttribute="height" multiplier="2:1" id="v8R-il-A2n"/>
                             <constraint firstItem="mbB-by-ZR9" firstAttribute="height" secondItem="y90-q9-bSw" secondAttribute="height" id="vLJ-27-3Hk"/>
                             <constraint firstItem="mbB-by-ZR9" firstAttribute="width" secondItem="t6Q-AB-uRB" secondAttribute="height" multiplier="1:1" id="w1K-VF-BW7"/>
                             <constraint firstItem="kjB-Su-v7C" firstAttribute="leading" secondItem="y90-q9-bSw" secondAttribute="trailing" id="w7c-cO-SKw"/>
