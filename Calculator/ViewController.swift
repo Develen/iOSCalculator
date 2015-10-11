@@ -22,6 +22,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        result.text = calculatorMethods.showDisplay()
+        
         // Do any additional setup after loading the view, typically from a nib.
         
     }
@@ -131,6 +133,29 @@ class ViewController: UIViewController {
     }
 
 
+    @IBAction func cleanDisplayPressed(sender: UIButton) {
+        calculatorMethods.cleanDisplay()
+        result.text = calculatorMethods.showDisplay()
+    }
+    
+    @IBAction func extraOperationPressed(sender: UIButton) {
+        var extraOperationPressed = sender.tag
+        var choosenExtraOperation = ExtraOperation()
+        
+        if extraOperationPressed == 1050 {
+            choosenExtraOperation = .percent
+        } else if extraOperationPressed == 1051 {
+            choosenExtraOperation = .root
+        } else if extraOperationPressed == 1052{
+            choosenExtraOperation = .divisor
+        } else {
+         return
+        }
+        
+        
+        
+    }
+    
     
     
 }

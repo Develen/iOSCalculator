@@ -15,6 +15,7 @@ public class Calculator {
     private var resultAsFirstNumber: Double = 0
     private var point = false
     private var memory = Memory()
+    private var extraCommand = ExtraOperation()
     
     public init() {
     }
@@ -27,6 +28,7 @@ public class Calculator {
         resultAsFirstNumber = 0
         point = false
         memory.cleanAllMemory()
+        extraCommand = .none
     }
     
     public func sendNumber(number: Int) {
@@ -37,29 +39,37 @@ public class Calculator {
         
         switch currentState {
         case .begin:
-            if firstNumber == "-0.0" {
-                firstNumber = "\((number) * (-1))"
-                 resultAsFirstNumber = (firstNumber as NSString).doubleValue
-                 currentState = .fillingFirstNumber
-            } else {
+           
+//            if firstNumber == "-0" {
+//                firstNumber = "-" + "\(number)"
+//                 resultAsFirstNumber = (firstNumber as NSString).doubleValue
+//                 currentState = .fillingFirstNumber
+//            } else {
             firstNumber = "\(number)"
             secondNumber = ""
             currentState = .fillingFirstNumber
             resultAsFirstNumber = (firstNumber as NSString).doubleValue
-            }
+            //}
             
         case .fillingFirstNumber:
-//            if firstNumber == "0" {
-//                firstNumber = "\(number)"
-//                resultAsFirstNumber = (firstNumber as NSString).doubleValue
-//            } else {
+            if firstNumber == "0" || firstNumber == "" {
+                firstNumber = "\(number)"
+                resultAsFirstNumber = (firstNumber as NSString).doubleValue
+
+            } else {
                 firstNumber = LimitForDispaly.limitDisplay(firstNumber, number: number, maxLength: CalculatorConstants.maxLengthForNumber)
                 resultAsFirstNumber = (firstNumber as NSString).doubleValue
-            
+            }
             
         case .operationPressed:
-            secondNumber = "\(number)"
+            if secondNumber == "-" {
+            secondNumber = secondNumber + "\(number)"
             currentState = .fillingSecondNumber
+            }
+            else {
+                secondNumber = "\(number)"
+                currentState = .fillingSecondNumber
+            }
 
             
         case .fillingSecondNumber:
@@ -93,6 +103,7 @@ public class Calculator {
             
         case .fillingFirstNumber:
             
+            
             switch calculationCommand {
             case .addition, .subtraction, .multiplication, .division:
                 arithmeticCommand = calculationCommand
@@ -115,6 +126,8 @@ public class Calculator {
                 } else {
                     
                     resultAsFirstNumber = LogicOfCalulation.calculateResult(resultAsFirstNumber, secondNumber: secondNumber, arithmeticCommand: arithmeticCommand)
+                    
+                    
                     arithmeticCommand = calculationCommand
                     currentState = .operationPressed
                     point = false
@@ -139,6 +152,19 @@ public class Calculator {
             return //TODO: use exceptions
         }
     }
+//    public func runExtraCommand (extraCalculationCommand : ExtraOperation) {
+//        switch currentState {
+//        case .begin:
+//            resultAsFirstNumber = LogicOfExtraCount.countingExtraOperation(resultAsFirstNumber, extraOperation: extraCalculationCommand)
+//            firstNumber = "\(resultAsFirstNumber)"
+//        case .fillingFirstNumber:
+//            resultAsFirstNumber = LogicOfExtraCount.countingExtraOperation(resultAsFirstNumber, extraOperation: extraCalculationCommand)
+//            firstNumber = "\(resultAsFirstNumber)"
+//        case .operationPressed:
+//            resultAsSecondNumber = LogicOfExtraCount.countingExtraOperation(resultAsFirstNumber, extraOperation: extraCalculationCommand)
+//            currentState = .fillingSecondNumber
+//        }
+//    }
     
     public func equalResult() {
         
@@ -153,8 +179,9 @@ public class Calculator {
                 arithmeticCommand = .none
             } else {
                 
-                resultAsFirstNumber = LogicOfCalulation.calculateResult(resultAsFirstNumber, secondNumber: secondNumber, arithmeticCommand: arithmeticCommand)
+                  resultAsFirstNumber = LogicOfCalulation.calculateResult(resultAsFirstNumber, secondNumber: secondNumber, arithmeticCommand: arithmeticCommand)
                 currentState = .begin
+                firstNumber = "\(resultAsFirstNumber)"
                 point = false
             }
         case .operationPressed:
@@ -166,59 +193,92 @@ public class Calculator {
         }
         
     }
+
     public func positiveOrNegativeNumber () {
         switch currentState {
+           
         case .begin:
-            if firstNumber == "0" || firstNumber == "-0.0" {
-                firstNumber = "\((-1) * (firstNumber as NSString).doubleValue)"
-            resultAsFirstNumber = (firstNumber as NSString).doubleValue
+            if Array(firstNumber)[0] == "-" {
+                firstNumber = dropFirst(firstNumber)
+                resultAsFirstNumber = (-1) * resultAsFirstNumber
+                // in swift 2.0  String(original.characters.dropFirst())
+                //or use x.removeAtIndex(x.startIndex)
+            } else if Array(firstNumber)[0] != "-" && firstNumber == "0" {
+                firstNumber = "-"
+                currentState = .fillingFirstNumber
             } else {
-                 resultAsFirstNumber = (-1) * resultAsFirstNumber
+                firstNumber = "-" + firstNumber
+                resultAsFirstNumber = (-1) * resultAsFirstNumber
             }
-        case .fillingFirstNumber:
-            resultAsFirstNumber = (-1) * (firstNumber as NSString).doubleValue
-            firstNumber = "\(resultAsFirstNumber)"
+         case .fillingFirstNumber:
+            if Array(firstNumber)[0] == "-" {
+                firstNumber = dropFirst(firstNumber)
+                resultAsFirstNumber = (firstNumber as NSString).doubleValue
+            } else {
+                firstNumber = "-" + firstNumber
+                resultAsFirstNumber = (firstNumber as NSString).doubleValue
+
+            }
+
         case .operationPressed:
-            return
+            secondNumber = "-"
+            currentState = .fillingSecondNumber
+            
         case .fillingSecondNumber:
-         secondNumber = "\((-1) * (secondNumber as NSString).doubleValue)"
+             if Array(secondNumber)[0] == "-" {
+                secondNumber = dropFirst(secondNumber)
+             } else {
+               secondNumber = "-" + secondNumber
+
+            }
+      
         default:
             return
         }
     }
-    //new
+   
     
     public func showDisplay() -> String {
         
-        var currentNumber = getCurrentNumber()
-        
-        return ShowCorrectResult.showLimitingResult(currentNumber, maxLength: CalculatorConstants.maxLengthForDisplay)
-        
-    }
-    
-    
-    private func getCurrentNumber () -> Double {
-        
+//        var currentNumber = getCurrentNumber()
         switch currentState {
         case .begin:
-            if firstNumber == "0" {
-                return 0
-            } else {
-                return resultAsFirstNumber
-                
-            }
-            
-        case .fillingFirstNumber, .operationPressed:
-            return resultAsFirstNumber
-            
+            return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: CalculatorConstants.maxLengthForDisplay)
+        case .fillingFirstNumber:
+            return firstNumber
+        case .operationPressed:
+            return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: CalculatorConstants.maxLengthForDisplay)
         case .fillingSecondNumber:
-            return (secondNumber as NSString).doubleValue
-            
+            return secondNumber
         default:
-            return 0
+            return "0"
         }
+        
     }
     
+//    
+//    private func getCurrentNumber () -> Double {
+//        
+//        switch currentState {
+//        case .begin:
+//            if firstNumber == "0" {
+//                return 0
+//            } else {
+//                return resultAsFirstNumber
+//                
+//            }
+//            
+//        case .fillingFirstNumber, .operationPressed:
+//            return resultAsFirstNumber
+//            
+//        case .fillingSecondNumber:
+//            return (secondNumber as NSString).doubleValue
+//            
+//        default:
+//            return 0
+//        }
+//    }
+//    
     public func showPoint() {
         
         if point == false {
@@ -259,7 +319,7 @@ public class Calculator {
             return
             
         case .fillingFirstNumber:
-            if firstNumber == "" {
+            if firstNumber == "0" {
                 return
             } else {
                 firstNumber = RemoveNumber.removeLastOne(firstNumber)
@@ -286,8 +346,21 @@ public class Calculator {
     }
     
     public func memory(memoryCommand: CommandForMemory) {
+        var currentNumber: Double = 0
+        //let currentNumber = getCurrentNumber()
+        switch currentState {
+        case  .begin:
+            currentNumber = resultAsFirstNumber
+        case .fillingFirstNumber:
+            currentNumber = resultAsFirstNumber
+        case .operationPressed:
+            currentNumber = resultAsFirstNumber
+        case .fillingSecondNumber:
+            currentNumber = (secondNumber as NSString).doubleValue
+        default:
+            return
+        }
         
-        let currentNumber = getCurrentNumber()
         
         switch memoryCommand{
         case .plus:
@@ -318,5 +391,21 @@ public class Calculator {
     
     public func showLabel () -> String {
         return memory.showLabel()
+    }
+    
+    public func cleanDisplay() {
+        point = false
+        switch currentState {
+        case .begin:
+            firstNumber = "0"
+            resultAsFirstNumber = 0
+        case .fillingFirstNumber:
+            firstNumber = "0"
+            resultAsFirstNumber = 0
+        case .operationPressed:
+            return
+        case .fillingSecondNumber:
+            secondNumber = "0"
+        }
     }
 }

@@ -8,8 +8,8 @@
 
 import Foundation
 
-class LogicOfCalulation {
-     class func calculateResult (firstNumber: Double, secondNumber: String, arithmeticCommand: CalculationCommand) -> Double {
+public class LogicOfCalulation {
+     public class func calculateResult (firstNumber: Double, secondNumber: String, arithmeticCommand: CalculationCommand) -> Double {
         switch arithmeticCommand {
         case .addition:
             return firstNumber + (secondNumber as NSString).doubleValue
