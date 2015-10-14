@@ -8,11 +8,10 @@
 import Foundation
 
 public class Calculator {
-    private var firstNumber = "0"
-    private var secondNumber = ""
+    private var firstNumber = CalculatorNumber()
+    private var secondNumber = CalculatorNumber()
     private var arithmeticCommand = CalculationCommand()
     private var currentState = CurrentState()
-    private var resultAsFirstNumber: Double = 0
     private var point = false
     private var memory = Memory()
     private var extraCommand = ExtraOperation()
@@ -21,11 +20,10 @@ public class Calculator {
     }
     
     public func clearAll () {
-        firstNumber = "0"
-        secondNumber = ""
+        firstNumber.stringValue = ""
+        secondNumber.stringValue = ""
         arithmeticCommand = .none
         currentState = .begin
-        resultAsFirstNumber = 0
         point = false
         memory.cleanAllMemory()
         extraCommand = .none
@@ -40,43 +38,36 @@ public class Calculator {
         switch currentState {
         case .begin:
            
-//            if firstNumber == "-0" {
-//                firstNumber = "-" + "\(number)"
-//                 resultAsFirstNumber = (firstNumber as NSString).doubleValue
-//                 currentState = .fillingFirstNumber
-//            } else {
-            firstNumber = "\(number)"
-            secondNumber = ""
+            firstNumber.stringValue = "\(number)"
             currentState = .fillingFirstNumber
-            resultAsFirstNumber = (firstNumber as NSString).doubleValue
-            //}
+           
             
         case .fillingFirstNumber:
-            if firstNumber == "0" || firstNumber == "" {
-                firstNumber = "\(number)"
-                resultAsFirstNumber = (firstNumber as NSString).doubleValue
+            if firstNumber.stringValue == "0" || firstNumber.stringValue == "" {
+                firstNumber.stringValue = "\(number)"
+                
 
             } else {
-                firstNumber = LimitForDispaly.limitDisplay(firstNumber, number: number, maxLength: CalculatorConstants.maxLengthForNumber)
-                resultAsFirstNumber = (firstNumber as NSString).doubleValue
+                firstNumber.stringValue = LimitForDispaly.limitDisplay(firstNumber.stringValue, number: number, maxLength: CalculatorConstants.maxLengthForNumber)
+                
             }
             
         case .operationPressed:
-            if secondNumber == "-" {
-            secondNumber = secondNumber + "\(number)"
+            if secondNumber.stringValue == "-" {
+            secondNumber.stringValue = secondNumber.stringValue + "\(number)"
             currentState = .fillingSecondNumber
             }
             else {
-                secondNumber = "\(number)"
+                secondNumber.stringValue = "\(number)"
                 currentState = .fillingSecondNumber
             }
 
             
         case .fillingSecondNumber:
-            if secondNumber == "0" {
-                secondNumber = "\(number)"
+            if secondNumber.stringValue == "0" {
+                secondNumber.stringValue = "\(number)"
             } else {
-                secondNumber = LimitForDispaly.limitDisplay(secondNumber, number: number, maxLength: CalculatorConstants.maxLengthForNumber)
+                secondNumber.stringValue = LimitForDispaly.limitDisplay(secondNumber.stringValue, number: number, maxLength: CalculatorConstants.maxLengthForNumber)
             }
             
 
@@ -107,6 +98,7 @@ public class Calculator {
             switch calculationCommand {
             case .addition, .subtraction, .multiplication, .division:
                 arithmeticCommand = calculationCommand
+                  firstNumber.doubleValue = (firstNumber.stringValue as NSString).doubleValue
                 currentState = .operationPressed
                 point = false
                 
@@ -120,12 +112,11 @@ public class Calculator {
             
             switch calculationCommand {
             case .addition, .subtraction, .multiplication, .division:
-                if secondNumber == "" {
+                if secondNumber.stringValue == "" {
                     arithmeticCommand = calculationCommand
                     currentState = .operationPressed
                 } else {
-                    
-                    resultAsFirstNumber = LogicOfCalulation.calculateResult(resultAsFirstNumber, secondNumber: secondNumber, arithmeticCommand: arithmeticCommand)
+                   firstNumber.doubleValue = LogicOfCalulation.calculateResult(firstNumber.doubleValue, secondNumber: secondNumber.stringValue, arithmeticCommand: arithmeticCommand)
                     
                     
                     arithmeticCommand = calculationCommand
@@ -174,14 +165,14 @@ public class Calculator {
         case .fillingFirstNumber:
             return
         case .fillingSecondNumber:
-            if secondNumber == "" {
+            if secondNumber.stringValue == "" {
                 currentState = .begin
                 arithmeticCommand = .none
             } else {
                 
-                  resultAsFirstNumber = LogicOfCalulation.calculateResult(resultAsFirstNumber, secondNumber: secondNumber, arithmeticCommand: arithmeticCommand)
+               firstNumber.doubleValue = LogicOfCalulation.calculateResult(firstNumber.doubleValue, secondNumber: secondNumber.stringValue, arithmeticCommand: arithmeticCommand)
                 currentState = .begin
-                firstNumber = "\(resultAsFirstNumber)"
+              
                 point = false
             }
         case .operationPressed:
@@ -198,65 +189,125 @@ public class Calculator {
         switch currentState {
            
         case .begin:
-            if Array(firstNumber)[0] == "-" {
-                firstNumber = dropFirst(firstNumber)
-                resultAsFirstNumber = (-1) * resultAsFirstNumber
+            if firstNumber.isString == true {
+                
+                if Array(firstNumber.stringValue)[0] == "-" {
+                    firstNumber.stringValue = dropFirst(firstNumber.stringValue)
+                    // in swift 2.0  String(original.characters.dropFirst())
+                    //or use x.removeAtIndex(x.startIndex)
+                    
+                } else if Array(firstNumber.stringValue)[0] != "-" && firstNumber.stringValue == "0" && firstNumber.stringValue == "" {
+                    firstNumber.stringValue = "-"
+                    currentState = .fillingFirstNumber
+                } else {
+                    firstNumber.stringValue = "-" + firstNumber.stringValue
+                    
+                }
+            } else {
+                if firstNumber.doubleValue == 0 {
+                    return
+                } else {
+                    firstNumber.doubleValue = (-1) * firstNumber.doubleValue
+                }
+                
+            }
+        
+         case .fillingFirstNumber:
+            if firstNumber.isString == true {
+            if Array(firstNumber.stringValue)[0] == "-" {
+                firstNumber.stringValue = dropFirst(firstNumber.stringValue)
                 // in swift 2.0  String(original.characters.dropFirst())
                 //or use x.removeAtIndex(x.startIndex)
-            } else if Array(firstNumber)[0] != "-" && firstNumber == "0" {
-                firstNumber = "-"
-                currentState = .fillingFirstNumber
+            } else if firstNumber.stringValue == "0" {
+                firstNumber.stringValue = "-"
             } else {
-                firstNumber = "-" + firstNumber
-                resultAsFirstNumber = (-1) * resultAsFirstNumber
+                firstNumber.stringValue = "-" + firstNumber.stringValue
+                
             }
-         case .fillingFirstNumber:
-            if Array(firstNumber)[0] == "-" {
-                firstNumber = dropFirst(firstNumber)
-                resultAsFirstNumber = (firstNumber as NSString).doubleValue
-            } else {
-                firstNumber = "-" + firstNumber
-                resultAsFirstNumber = (firstNumber as NSString).doubleValue
-
+            
+            
+         } else {
+            if firstNumber.doubleValue == 0 {
+            return
+         } else {
+            firstNumber.doubleValue = (-1) * firstNumber.doubleValue
             }
-
+            
+         }
+         
+        
         case .operationPressed:
-            secondNumber = "-"
-            currentState = .fillingSecondNumber
+            secondNumber.stringValue = "-"
+currentState = .fillingSecondNumber
+
             
         case .fillingSecondNumber:
-             if Array(secondNumber)[0] == "-" {
-                secondNumber = dropFirst(secondNumber)
-             } else {
-               secondNumber = "-" + secondNumber
-
+    if secondNumber.isString == true {
+                if Array(secondNumber.stringValue)[0] == "-" {
+            secondNumber.stringValue = dropFirst(secondNumber.stringValue)
+            // in swift 2.0  String(original.characters.dropFirst())
+            //or use x.removeAtIndex(x.startIndex)
+            
+        } else if Array(secondNumber.stringValue)[0] != "-" && secondNumber.stringValue == "0" {
+            secondNumber.stringValue = "-"
+            
+        } else {
+            secondNumber.stringValue = "-" + secondNumber.stringValue
+            
+                }
+            } else {
+                if secondNumber.doubleValue == 0 {
+                    return
+               
+                
+                }
+                    else {
+                    secondNumber.doubleValue = (-1) * secondNumber.doubleValue
+                }
+                
             }
-      
         default:
             return
         }
     }
-   
     
+
+
     public func showDisplay() -> String {
-        
-//        var currentNumber = getCurrentNumber()
+        //        var currentNumber = getCurrentNumber()
         switch currentState {
-        case .begin:
-            return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: CalculatorConstants.maxLengthForDisplay)
-        case .fillingFirstNumber:
-            return firstNumber
-        case .operationPressed:
-            return ShowCorrectResult.showLimitingResult(resultAsFirstNumber, maxLength: CalculatorConstants.maxLengthForDisplay)
-        case .fillingSecondNumber:
-            return secondNumber
-        default:
-            return "0"
+case .begin:
+        if firstNumber.isString == true {
+            return firstNumber.stringValue
+        } else {
+            return ShowCorrectResult.showLimitingResult(firstNumber.doubleValue, maxLength: CalculatorConstants.maxLengthForDisplay)
+    }
+case .fillingFirstNumber:
+            if firstNumber.isString == true {
+                return firstNumber.stringValue
+            } else {
+                return ShowCorrectResult.showLimitingResult(firstNumber.doubleValue, maxLength: CalculatorConstants.maxLengthForDisplay)
+    }
+case .operationPressed:
+                if firstNumber.isString == true {
+                    return firstNumber.stringValue
+                } else {
+                    return ShowCorrectResult.showLimitingResult(firstNumber.doubleValue, maxLength: CalculatorConstants.maxLengthForDisplay)
+    }
+case .fillingSecondNumber:
+                    if secondNumber.isString == true {
+                        return secondNumber.stringValue
+                    } else {
+                        return ShowCorrectResult.showLimitingResult(secondNumber.doubleValue, maxLength: CalculatorConstants.maxLengthForDisplay)
+    }
+default:
+                        return "0"
         }
         
     }
     
-//    
+    
+//
 //    private func getCurrentNumber () -> Double {
 //        
 //        switch currentState {
@@ -280,132 +331,151 @@ public class Calculator {
 //    }
 //    
     public func showPoint() {
-        
-        if point == false {
-            point = true
-            
-            switch currentState {
-            case .begin:
-                point = false
-                
-            case .fillingFirstNumber:
-                firstNumber = firstNumber + "."
-                resultAsFirstNumber = (firstNumber as NSString).doubleValue
-                
-            case .fillingSecondNumber:
-                if secondNumber == "" {
-                    point = false
-                    return
-                } else {
-                    secondNumber = secondNumber + "."
-                    
-                }
-                
-            case .operationPressed:
-                point = false
-                
-            default:
-                return
-            }
-        } else if point == true {
-            return
-        }
-    }
+    if point == false {
+    point = true
     
+    switch currentState {
+    case .begin:
+        point = false
+        
+    case .fillingFirstNumber:
+        firstNumber.stringValue = firstNumber.stringValue + "."
+        
+        
+    case .fillingSecondNumber:
+        if secondNumber.stringValue == "" {
+            point = false
+            return
+        } else {
+            secondNumber.stringValue = secondNumber.stringValue + "."
+            
+        }
+        
+    case .operationPressed:
+                point = false
+        
+    default:
+        return
+    }
+} else if point == true {
+    return
+    }
+    }
+
+
     public func removingNumber () {
         
+        
         switch currentState {
-        case .begin:
+case .begin:
+    return
+    
+case .fillingFirstNumber:
+            if firstNumber.stringValue == "0" {
             return
+        } else {
+            firstNumber.stringValue = RemoveNumber.removeLastOne(firstNumber.stringValue)
             
-        case .fillingFirstNumber:
-            if firstNumber == "0" {
-                return
-            } else {
-                firstNumber = RemoveNumber.removeLastOne(firstNumber)
-                resultAsFirstNumber = (firstNumber as NSString).doubleValue
-                
-            }
             
-        case .fillingSecondNumber:
-            if secondNumber == "" {
-                return
-            } else {
-                secondNumber = RemoveNumber.removeLastOne(secondNumber)
-                
-                
-            }
-            
-        case .operationPressed:
-            
-            return
-            
-        default:
-            return
-        }
     }
     
+case .fillingSecondNumber:
+                if secondNumber.stringValue == "" {
+                return
+            } else {
+                secondNumber.stringValue = RemoveNumber.removeLastOne(secondNumber.stringValue)
+                
+                
+    }
+    
+case .operationPressed:
+                    
+    return
+    
+default:
+    return
+        }
+    }
+
+
     public func memory(memoryCommand: CommandForMemory) {
-        var currentNumber: Double = 0
-        //let currentNumber = getCurrentNumber()
-        switch currentState {
-        case  .begin:
-            currentNumber = resultAsFirstNumber
-        case .fillingFirstNumber:
-            currentNumber = resultAsFirstNumber
-        case .operationPressed:
-            currentNumber = resultAsFirstNumber
-        case .fillingSecondNumber:
-            currentNumber = (secondNumber as NSString).doubleValue
-        default:
-            return
+    var currentNumber: Double = 0
+    //let currentNumber = getCurrentNumber()
+    switch currentState {
+    case  .begin:
+    if firstNumber.isString == true {
+    currentNumber = (firstNumber.stringValue as NSString).doubleValue
+} else {
+    currentNumber = firstNumber.doubleValue
         }
-        
-        
-        switch memoryCommand{
-        case .plus:
-            memory.memoryManager(currentNumber, arithmeticMemoryCommand: .addition)
-        case .minus:
-            memory.memoryManager(currentNumber, arithmeticMemoryCommand: .subtraction)
-        case .clean:
-            memory.cleanAllMemory()
-        case .equalMemory:
-            switch currentState {
-            case .begin:
-                resultAsFirstNumber = memory.equalMemory()
-            case .fillingFirstNumber:
-                currentState = .begin
-            case .fillingSecondNumber:
-                resultAsFirstNumber = memory.equalMemory()
-                currentState = .begin
-            case .operationPressed:
-                resultAsFirstNumber = memory.equalMemory()
-                currentState = .begin
-            default: return
-            }
-        default: return
-            
+    case .fillingFirstNumber:
+        if firstNumber.isString == true {
+        currentNumber = (firstNumber.stringValue as NSString).doubleValue
+    } else {
+        currentNumber = firstNumber.doubleValue
         }
-        
+    case .operationPressed:
+        if firstNumber.isString == true {
+            currentNumber = (firstNumber.stringValue as NSString).doubleValue
+        } else {
+            currentNumber = firstNumber.doubleValue
+        }
+    case .fillingSecondNumber:
+        if secondNumber.isString == true {
+            currentNumber = (secondNumber.stringValue as NSString).doubleValue
+        } else {
+            currentNumber = secondNumber.doubleValue
+        }
+    default:
+        return
     }
+    }
+    // this should be in this func
     
-    public func showLabel () -> String {
-        return memory.showLabel()
-    }
+//        switch memoryCommand{
+//        case .plus:
+//            memory.memoryManager(currentNumber, arithmeticMemoryCommand: .addition)
+//        case .minus:
+//            memory.memoryManager(currentNumber, arithmeticMemoryCommand: .subtraction)
+//        case .clean:
+//            memory.cleanAllMemory()
+//        case .equalMemory:
+//            switch currentState {
+//            case .begin:
+//                resultAsFirstNumber = memory.equalMemory()
+//            case .fillingFirstNumber:
+//                currentState = .begin
+//            case .fillingSecondNumber:
+//                resultAsFirstNumber = memory.equalMemory()
+//                currentState = .begin
+//            case .operationPressed:
+//                resultAsFirstNumber = memory.equalMemory()
+//                currentState = .begin
+//            default: return
+//            }
+//        default: return
+//            
+//        }
+//        
+//    }
     
-    public func cleanDisplay() {
-        point = false
-        switch currentState {
-        case .begin:
-            firstNumber = "0"
-            resultAsFirstNumber = 0
-        case .fillingFirstNumber:
-            firstNumber = "0"
-            resultAsFirstNumber = 0
-        case .operationPressed:
-            return
-        case .fillingSecondNumber:
-            secondNumber = "0"
-        }
-    }
+//    public func showLabel () -> String {
+//        return memory.showLabel()
+//    }
+//    
+//    public func cleanDisplay() {
+//        point = false
+//        switch currentState {
+//        case .begin:
+//            firstNumber = "0"
+//            resultAsFirstNumber = 0
+//        case .fillingFirstNumber:
+//            firstNumber = "0"
+//            resultAsFirstNumber = 0
+//        case .operationPressed:
+//            return
+//        case .fillingSecondNumber:
+//            secondNumber = "0"
+//        }
+//    }
 }
