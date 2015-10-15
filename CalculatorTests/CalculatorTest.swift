@@ -246,16 +246,16 @@ class CalculatorTest: XCTestCase {
         calculator.sendNumber(8)
         XCTAssert (calculator.showDisplay() == "5.28", "PointTwiceInThSecondNumber failed")
     }
-//    
-//    func testMemoryLabelAfterCleanAll() {
-//        calculator.sendNumber(5)
-//        calculator.memory(.plus)
-//        calculator.runCommand(.addition)
-//        calculator.sendNumber(6)
-//        calculator.memory(.minus)
-//        XCTAssert (calculator.showLabel() == "M", "MemoryLabelAfterCleanAll faild")
-//        
-//    }
+    
+    func testMemoryLabelAfterCleanAll() {
+        calculator.sendNumber(5)
+        calculator.memory(.plus)
+        calculator.runCommand(.addition)
+        calculator.sendNumber(6)
+        calculator.memory(.minus)
+        XCTAssert (calculator.showLabel() == "M", "MemoryLabelAfterCleanAll faild")
+        
+    }
     func testNegativeFirstPressed() {
         calculator.positiveOrNegativeNumber()
         
@@ -324,50 +324,90 @@ class CalculatorTest: XCTestCase {
         XCTAssert (calculator.showDisplay() == "-9.999998E+13", "MemoryLabelAfterCleanAll faild")
         
     }
-//    func testCleanDisplaySecondNumber() {
-//        
-//        calculator.sendNumber(5)
-//        calculator.runCommand(.addition)
-//        calculator.sendNumber(4)
-//        calculator.sendNumber(5)
-//        calculator.cleanDisplay()
-//    
-//        XCTAssert (calculator.showDisplay() == "0", "CleanDisplaySecondNumber faild")
-//        
-//    }
-  //  func testCleanDisplayAfterEqual() {
-//        
-//        calculator.sendNumber(5)
-//        calculator.runCommand(.addition)
-//        calculator.sendNumber(4)
-//        calculator.sendNumber(5)
-//        calculator.equalResult()
-//        calculator.cleanDisplay()
-//        
-//        XCTAssert (calculator.showDisplay() == "0", "NegativeResultAndContinueCounting faild")
-//        
-//    }
-//    func testCleanDisplayAndContinueCounting() {
-//        
-//        calculator.sendNumber(2)
-//         calculator.sendNumber(5)
-//        calculator.runCommand(.division)
-//        calculator.sendNumber(2)
-//       
-//        calculator.equalResult()
-//        calculator.runCommand(.addition)
-//        calculator.sendNumber(4)
-//        calculator.showPoint()
-//        
-//        calculator.cleanDisplay()
-//        calculator.sendNumber(2)
-//        calculator.showPoint()
-//        calculator.sendNumber(5)
-//        calculator.equalResult()
-//        
-//        XCTAssert (calculator.showDisplay() == "15", "leanDisplayAndContinueCounting faild")
-//        
-//    }
+    func testCleanDisplaySecondNumber() {
+        
+        calculator.sendNumber(5)
+        calculator.runCommand(.addition)
+        calculator.sendNumber(4)
+        calculator.sendNumber(5)
+        calculator.cleanDisplay()
     
+        XCTAssert (calculator.showDisplay() == "0", "CleanDisplaySecondNumber faild")
+        
+    }
+    func testCleanDisplayAfterEqual() {
+        
+        calculator.sendNumber(5)
+        calculator.runCommand(.addition)
+        calculator.sendNumber(4)
+        calculator.sendNumber(5)
+        calculator.equalResult()
+        calculator.cleanDisplay()
+        
+        XCTAssert (calculator.showDisplay() == "0", "NegativeResultAndContinueCounting faild")
+        
+    }
+    func testCleanDisplayAndContinueCounting() {
+        
+        calculator.sendNumber(2)
+         calculator.sendNumber(5)
+        calculator.runCommand(.division)
+        calculator.sendNumber(2)
+       
+        calculator.equalResult()
+        calculator.runCommand(.addition)
+        calculator.sendNumber(4)
+        calculator.showPoint()
+        
+        calculator.cleanDisplay()
+        calculator.sendNumber(2)
+        calculator.showPoint()
+        calculator.sendNumber(5)
+        calculator.equalResult()
+        
+        XCTAssert (calculator.showDisplay() == "15", "leanDisplayAndContinueCounting faild")
+        
+    }
+    
+    func testStartCalculationWithCommands() {
+        calculator.runCommand(.addition)
+        calculator.removingNumber()
+        calculator.sendNumber(5)
+        calculator.sendNumber(4)
+        calculator.runCommand(.subtraction)
+        calculator.sendNumber(2)
+        calculator.equalResult()
+         XCTAssert (calculator.showDisplay() == "52", "StartCalculationWithCommands faild")
+    }
+    
+    
+    func testStartCalculationWithNegativeMethod() {
+        calculator.positiveOrNegativeNumber()
+        calculator.removingNumber()
+        calculator.sendNumber(2)
+        calculator.sendNumber(6)
+        calculator.runCommand(.addition)
+        calculator.sendNumber(2)
+        calculator.equalResult()
+        XCTAssert (calculator.showDisplay() == "28", "StartCalculationWithNegativeMethod faild")
+    }
+    
+    
+    func testStartCalculationWithoutFillingFirstNumberUsingZero() {
+    
+        calculator.runCommand(.multiplication)
+        calculator.sendNumber(2)
+        calculator.equalResult()
+        XCTAssert (calculator.showDisplay() == "0", "StartCalculationWithoutFillingFirstNumberUsingZero faild")
+    }
+    
+    func testStartCalculationWithoutFillingFirstNumberUsingZeroButFillingSecondNumber() {
+        
+        calculator.runCommand(.multiplication)
+        calculator.positiveOrNegativeNumber()
+        calculator.sendNumber(6)
+        calculator.equalResult()
+        XCTAssert (calculator.showDisplay() == "0", "CalculationWithoutFillingFirstNumberUsingZeroButFillingSecondNumber faild")
+    }
     
 }
