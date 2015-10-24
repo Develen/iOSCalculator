@@ -50,6 +50,7 @@ public class Calculator {
             }
             
         case .operationPressed:
+            if secondNumber.isString == true {
             if secondNumber.stringValue == "-" {
                 secondNumber.stringValue = secondNumber.stringValue + "\(number)"
                 currentState = .fillingSecondNumber
@@ -57,12 +58,20 @@ public class Calculator {
                 secondNumber.stringValue = "\(number)"
                 currentState = .fillingSecondNumber
             }
+            } else {
+                secondNumber.stringValue = "\(number)"
+                currentState = .fillingSecondNumber
+            }
             
         case .fillingSecondNumber:
+            if secondNumber.isString == true {
             if secondNumber.stringValue == "0" {
                 secondNumber.stringValue = "\(number)"
             } else {
                 secondNumber.stringValue = LimitForDispaly.limitDisplay(secondNumber.stringValue, number: number, maxLength: CalculatorConstants.maxLengthForNumber)
+            }
+            } else {
+                return
             }
             
         default:
@@ -105,15 +114,30 @@ public class Calculator {
             
             switch calculationCommand {
             case .addition, .subtraction, .multiplication, .division:
-                if secondNumber.stringValue == "" {
-                    arithmeticCommand = calculationCommand
-                    currentState = .operationPressed
-                } else if firstNumber.isString == true {
+                if firstNumber.isString == true && secondNumber.isString == true {
+                    if secondNumber.stringValue == "" {
+                        arithmeticCommand = calculationCommand
+                        currentState = .operationPressed
+                    } else {
+                         firstNumber.doubleValue = (firstNumber.stringValue as NSString).doubleValue
+                        secondNumber.doubleValue = (secondNumber.stringValue as NSString).doubleValue
+                        firstNumber.doubleValue = LogicOfCalulation.calculateResult(firstNumber.doubleValue, secondNumber: secondNumber.doubleValue, arithmeticCommand: arithmeticCommand)
+                    }
+                } else if firstNumber.isString == false && secondNumber.isString == true {
+                    if secondNumber.stringValue == "" {
+                        arithmeticCommand = calculationCommand
+                        currentState = .operationPressed
+                    } else {
+                        secondNumber.doubleValue = (secondNumber.stringValue as NSString).doubleValue
+                        firstNumber.doubleValue = LogicOfCalulation.calculateResult(firstNumber.doubleValue, secondNumber: secondNumber.doubleValue, arithmeticCommand: arithmeticCommand)
+                    }
+                } else if firstNumber.isString == true && secondNumber.isString == false {
                     firstNumber.doubleValue = (firstNumber.stringValue as NSString).doubleValue
-                    firstNumber.doubleValue = LogicOfCalulation.calculateResult(firstNumber.doubleValue, secondNumber: secondNumber.stringValue, arithmeticCommand: arithmeticCommand)
+ firstNumber.doubleValue = LogicOfCalulation.calculateResult(firstNumber.doubleValue, secondNumber: secondNumber.doubleValue, arithmeticCommand: arithmeticCommand)
                 } else {
-                    firstNumber.doubleValue = LogicOfCalulation.calculateResult(firstNumber.doubleValue, secondNumber: secondNumber.stringValue, arithmeticCommand: arithmeticCommand)
+                     firstNumber.doubleValue = LogicOfCalulation.calculateResult(firstNumber.doubleValue, secondNumber: secondNumber.doubleValue, arithmeticCommand: arithmeticCommand)
                 }
+                    
                 
                 arithmeticCommand = calculationCommand
                 currentState = .operationPressed
@@ -137,6 +161,94 @@ public class Calculator {
             return //TODO: use exceptions
         }
     }
+    public func runExtraCommand (extraCalculationCommand : ExtraOperation) {
+                switch currentState {
+                case .begin:
+                    switch extraCommand {
+                    case .root, .divisor:
+                
+                    if firstNumber.isString == true {
+                        firstNumber.doubleValue = (firstNumber.stringValue as NSString).doubleValue
+                        firstNumber.doubleValue = LogicOfExtraCount.countingExtraOperation(firstNumber.doubleValue, extraOperation: extraCalculationCommand)
+                    } else {
+                         firstNumber.doubleValue = LogicOfExtraCount.countingExtraOperation(firstNumber.doubleValue, extraOperation: extraCalculationCommand)
+                    }
+                    case .percent:
+                        return
+                    default:
+                        return
+                    }
+                    
+                case .fillingFirstNumber:
+                    switch extraCommand {
+                    case .root, .divisor:
+                    if firstNumber.isString == true {
+                        firstNumber.doubleValue = (firstNumber.stringValue as NSString).doubleValue
+                        firstNumber.doubleValue = LogicOfExtraCount.countingExtraOperation(firstNumber.doubleValue, extraOperation: extraCalculationCommand)
+                        currentState = .begin
+                    } else {
+                        firstNumber.doubleValue = LogicOfExtraCount.countingExtraOperation(firstNumber.doubleValue, extraOperation: extraCalculationCommand)
+                        currentState = .begin
+                    }
+                    case .percent:
+                        return
+                    default:
+                        return
+                    }
+                case .operationPressed:
+                    switch extraCommand {
+                    case .root, .divisor:
+                    if firstNumber.isString == true {
+                        firstNumber.doubleValue = (firstNumber.stringValue as NSString).doubleValue
+                        secondNumber.doubleValue = LogicOfExtraCount.countingExtraOperation(firstNumber.doubleValue, extraOperation: extraCalculationCommand)
+                        currentState = .fillingSecondNumber
+                    } else {
+                        secondNumber.doubleValue = LogicOfExtraCount.countingExtraOperation(firstNumber.doubleValue, extraOperation: extraCalculationCommand)
+                         currentState = .fillingSecondNumber
+                    }
+                    case .percent:
+                        if firstNumber.isString == true {
+                            firstNumber.doubleValue = (firstNumber.stringValue as NSString).doubleValue
+                            secondNumber.doubleValue = firstNumber.doubleValue * LogicOfExtraCount.countingExtraOperation(firstNumber.doubleValue, extraOperation: extraCalculationCommand)
+                            currentState = .fillingSecondNumber
+                        } else {
+                           secondNumber.doubleValue = firstNumber.doubleValue * LogicOfExtraCount.countingExtraOperation(firstNumber.doubleValue, extraOperation: extraCalculationCommand)
+                            currentState = .fillingSecondNumber
+                        }
+                    default:
+                        return
+
+                    }
+                    
+                case .fillingSecondNumber:
+                    switch extraCommand {
+                    case .root, .divisor:
+                    if secondNumber.isString == true {
+                        secondNumber.doubleValue = (secondNumber.stringValue as NSString).doubleValue
+                        secondNumber.doubleValue = LogicOfExtraCount.countingExtraOperation(secondNumber.doubleValue, extraOperation: extraCalculationCommand)
+                        
+                    } else {
+                        secondNumber.doubleValue = LogicOfExtraCount.countingExtraOperation(secondNumber.doubleValue, extraOperation: extraCalculationCommand)
+                        
+                    }
+                    case .percent:
+                        if secondNumber.isString == true {
+                            secondNumber.doubleValue = (secondNumber.stringValue as NSString).doubleValue
+                            secondNumber.doubleValue = secondNumber.doubleValue * LogicOfExtraCount.countingExtraOperation(firstNumber.doubleValue, extraOperation: extraCalculationCommand)
+                           
+                        } else {
+                           secondNumber.doubleValue = secondNumber.doubleValue * LogicOfExtraCount.countingExtraOperation(firstNumber.doubleValue, extraOperation: extraCalculationCommand)
+
+                        }
+                    default:
+                        return
+                        
+                    }
+                default:
+                    return
+        }
+    }
+    
     
     public func equalResult() {
         
@@ -148,18 +260,42 @@ public class Calculator {
             return
             
         case .fillingSecondNumber:
-            if secondNumber.stringValue == "" {
-                currentState = .begin
-                arithmeticCommand = .none
-            } else {
-                if firstNumber.isString == true {
-                    firstNumber.doubleValue = (firstNumber.stringValue as NSString).doubleValue
+            if firstNumber.isString == true && secondNumber.isString == true {
+                if secondNumber.stringValue == "" {
+                    currentState = .begin
+                    arithmeticCommand = .none
+                    point = false
                 } else {
-                    firstNumber.doubleValue = LogicOfCalulation.calculateResult(firstNumber.doubleValue, secondNumber: secondNumber.stringValue, arithmeticCommand: arithmeticCommand)
+                    firstNumber.doubleValue = (firstNumber.stringValue as NSString).doubleValue
+                    secondNumber.doubleValue = (secondNumber.stringValue as NSString).doubleValue
+                    firstNumber.doubleValue  = LogicOfCalulation.calculateResult(firstNumber.doubleValue, secondNumber: secondNumber.doubleValue, arithmeticCommand: arithmeticCommand)
+                    currentState = .begin
+                    arithmeticCommand = .none
+                    point = false
                 }
+            } else if firstNumber.isString == false && secondNumber.isString == true {
+                if secondNumber.stringValue == "" {
+                    currentState = .begin
+                    arithmeticCommand = .none
+                    point = false
+                } else {
+                    secondNumber.doubleValue = (secondNumber.stringValue as NSString).doubleValue
+                    firstNumber.doubleValue  = LogicOfCalulation.calculateResult(firstNumber.doubleValue, secondNumber: secondNumber.doubleValue, arithmeticCommand: arithmeticCommand)
+                    currentState = .begin
+                    point = false
+                }
+            } else if firstNumber.isString == true && secondNumber.isString == false {
+                firstNumber.doubleValue = (firstNumber.stringValue as NSString).doubleValue
+                firstNumber.doubleValue = LogicOfCalulation.calculateResult(firstNumber.doubleValue, secondNumber: secondNumber.doubleValue, arithmeticCommand: arithmeticCommand)
+                currentState = .begin
+                point = false
+            } else {
+                firstNumber.doubleValue = LogicOfCalulation.calculateResult(firstNumber.doubleValue, secondNumber: secondNumber.doubleValue, arithmeticCommand: arithmeticCommand)
                 currentState = .begin
                 point = false
             }
+            
+           
             
         case .operationPressed:
             currentState = .begin
@@ -250,6 +386,7 @@ public class Calculator {
                 return firstNumber.stringValue
             } else {
                 return ShowCorrectResult.showLimitingResult(firstNumber.doubleValue, maxLength: CalculatorConstants.maxLengthForDisplay)
+                
             }
             
         case .fillingSecondNumber:

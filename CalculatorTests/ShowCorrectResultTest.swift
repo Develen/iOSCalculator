@@ -97,6 +97,12 @@ class ShowCorrectResultTest: XCTestCase {
               XCTAssert(ShowCorrectResult.showLimitingResult(548763235689744132365678987543568784646576768898965, maxLength: 10) == "large number", "too large number of integer")
     }
     
+    func testShowCorrectResult_minusNul() {
+        
+        XCTAssert(ShowCorrectResult.showLimitingResult(-0, maxLength: 10) == "0", "decimal")
+        
+        
+    }
 
     
 

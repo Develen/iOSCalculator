@@ -9,19 +9,19 @@
 import Foundation
 
 public class LogicOfCalulation {
-     public class func calculateResult (firstNumber: Double, secondNumber: String, arithmeticCommand: CalculationCommand) -> Double {
+     public class func calculateResult (firstNumber: Double, secondNumber: Double, arithmeticCommand: CalculationCommand) -> Double {
         switch arithmeticCommand {
         case .addition:
-            return firstNumber + (secondNumber as NSString).doubleValue
+            return firstNumber + secondNumber
         case .subtraction:
-            return firstNumber - (secondNumber as NSString).doubleValue
+            return firstNumber - secondNumber
         case .multiplication:
-            return firstNumber * (secondNumber as NSString).doubleValue
+            return firstNumber * secondNumber
         case .division:
-            if secondNumber == "0" {
+            if secondNumber == 0 || secondNumber == 0.0  {
                 return 0
             } else {
-            return firstNumber  / (secondNumber as NSString).doubleValue
+            return firstNumber  / secondNumber
             }
         default:
             return 0

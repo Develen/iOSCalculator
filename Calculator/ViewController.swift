@@ -70,7 +70,7 @@ class ViewController: UIViewController {
     @IBAction func equalPressed(sender: UIButton) {
         calculatorMethods.equalResult()
             result.text = calculatorMethods.showDisplay()
-        //epsilon.text = calculatorMethods.showEpsilon()
+       
         
     }
     
@@ -79,7 +79,7 @@ class ViewController: UIViewController {
     @IBAction func clearPressed(sender: AnyObject) {
         
         calculatorMethods.clearAll()
-  //      label.text = calculatorMethods.showLabel()
+   label.text = calculatorMethods.showLabel()
         result.text = calculatorMethods.showDisplay()
           }
     
@@ -119,7 +119,7 @@ class ViewController: UIViewController {
             return
         }
         calculatorMethods.memory(memoryAction)
-       // label.text = calculatorMethods.showLabel()
+     label.text = calculatorMethods.showLabel()
         
         result.text = calculatorMethods.showDisplay()
         
@@ -134,7 +134,7 @@ class ViewController: UIViewController {
 
 
     @IBAction func cleanDisplayPressed(sender: UIButton) {
-       // calculatorMethods.cleanDisplay()
+      calculatorMethods.cleanDisplay()
         result.text = calculatorMethods.showDisplay()
     }
     

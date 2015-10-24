@@ -50,7 +50,7 @@ public class ShowCorrectResult {
 
         
         }
-        else if resultAsFirstNumber > -1 && resultAsFirstNumber < 0 {
+        else if resultAsFirstNumber > -1 && resultAsFirstNumber < 0 && resultAsFirstNumber != -0 {
             
             
             let power = maxLength - 3
@@ -74,9 +74,9 @@ public class ShowCorrectResult {
             
             }
             
-           }
+        }
     
-        else if resultAsFirstNumber >= 1 || resultAsFirstNumber <= -1 || resultAsFirstNumber == 0 {
+        else if resultAsFirstNumber >= 1 || resultAsFirstNumber <= -1  {
             if resultAsFirstNumber <= Double(Int64.max) {
                 let integerFromResultAsFirstNumber = Int64(resultAsFirstNumber)
                 let countingIntegerFromResultAsFirstNumber = count("\(integerFromResultAsFirstNumber)")
@@ -100,26 +100,24 @@ public class ShowCorrectResult {
             } else {
                 return "wrong number"
             }
-
-            
-          } else {
-            return "large number"
             }
-            
-            
         }
-        
-        
 
-
-            
-            
-        else {
-                return "incorrect result"
+            else if resultAsFirstNumber == -0 || resultAsFirstNumber == 0 {
+                return "0"
+                
+            } else {
+            return "incorrect result"
             }
-            
+        }
+     
+            return "large number"
+        
       }
-    }
+    
+
+
+
     init () {
         
     }
