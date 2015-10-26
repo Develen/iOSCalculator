@@ -162,6 +162,7 @@ public class Calculator {
         }
     }
     public func runExtraCommand (extraCalculationCommand : ExtraOperation) {
+        extraCommand = extraCalculationCommand
                 switch currentState {
                 case .begin:
                     switch extraCommand {

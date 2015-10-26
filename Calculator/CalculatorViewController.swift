@@ -152,7 +152,8 @@ class CalculatorViewController: UIViewController {
         } else {
          return
         }
-        
+        calculatorMethods.runExtraCommand(choosenExtraOperation)
+        result.text = calculatorMethods.showDisplay()
         
         
     }
