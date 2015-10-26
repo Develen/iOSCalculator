@@ -11,7 +11,7 @@ import Foundation
 class LimitForDispaly {
     static func limitDisplay (operandNumber: String, number: Int, maxLength: Int) -> String {
         
-        if count(operandNumber) < maxLength {
+        if operandNumber.characters.count < maxLength {
             return operandNumber + "\(number)"
             
         } else {

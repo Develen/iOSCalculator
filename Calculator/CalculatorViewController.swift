@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CalculatorViewController: UIViewController {
 
     @IBOutlet weak var result: UILabel!
     
@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         result.text = calculatorMethods.showDisplay()
+        label.text = calculatorMethods.showLabel()
         
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -34,7 +35,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func numberPressed(sender: UIButton) {
-        var number = sender.tag
+        let number = sender.tag
         
         calculatorMethods.sendNumber(number)
     
@@ -44,7 +45,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func operatorPressed(sender: UIButton) {
-        var operatorTag = sender.tag
+        let operatorTag = sender.tag
       var choosenOperator = CalculationCommand()
         
         if operatorTag == 1001 {
@@ -103,7 +104,7 @@ class ViewController: UIViewController {
 
     
     @IBAction func memoryPressed(sender: UIButton) {
-   var memoryTag = sender.tag
+   let memoryTag = sender.tag
         var memoryAction = CommandForMemory()
       
         
@@ -139,7 +140,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func extraOperationPressed(sender: UIButton) {
-        var extraOperationPressed = sender.tag
+        let extraOperationPressed = sender.tag
         var choosenExtraOperation = ExtraOperation()
         
         if extraOperationPressed == 1050 {
@@ -156,6 +157,8 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func ConverterCurrency(sender: AnyObject) {
+    }
     
     
 }

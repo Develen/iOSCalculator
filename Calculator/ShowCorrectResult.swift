@@ -79,7 +79,7 @@ public class ShowCorrectResult {
         else if resultAsFirstNumber >= 1 || resultAsFirstNumber <= -1  {
             if resultAsFirstNumber <= Double(Int64.max) {
                 let integerFromResultAsFirstNumber = Int64(resultAsFirstNumber)
-                let countingIntegerFromResultAsFirstNumber = count("\(integerFromResultAsFirstNumber)")
+                let countingIntegerFromResultAsFirstNumber = "\(integerFromResultAsFirstNumber)".characters.count
                 
             if countingIntegerFromResultAsFirstNumber < (maxLength - 1) {
                 
@@ -124,7 +124,7 @@ public class ShowCorrectResult {
     
     private class func largeAmountForDisplay (integerFromDoubleResult: Int64, maxLength: Int ) -> String {
         
-        var countingIntegerFromDoubleResult = count("\(integerFromDoubleResult)")
+        let countingIntegerFromDoubleResult = "\(integerFromDoubleResult)".characters.count
         var power = 1
         if integerFromDoubleResult > 0 {
             power = countingIntegerFromDoubleResult - 1
@@ -133,7 +133,7 @@ public class ShowCorrectResult {
         }
         
         let resultForDisplay = Double(integerFromDoubleResult) / pow(10, Double(power))
-        let countingPower = count("\(power)")
+        let countingPower = "\(power)".characters.count
         let formatter = NSNumberFormatter()
         
         if integerFromDoubleResult > 0 {

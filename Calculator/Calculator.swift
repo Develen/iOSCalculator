@@ -311,11 +311,11 @@ public class Calculator {
         switch currentState {
         case .begin:
             if firstNumber.isString == true {
-                if Array(firstNumber.stringValue)[0] == "-" && firstNumber.stringValue != "-" {
-                    firstNumber.stringValue = dropFirst(firstNumber.stringValue)
+                if Array(firstNumber.stringValue.characters)[0] == "-" && firstNumber.stringValue != "-" {
+                    firstNumber.stringValue = String(firstNumber.stringValue.characters.dropFirst())
                     // in swift 2.0  String(original.characters.dropFirst())
                     //or use x.removeAtIndex(x.startIndex)
-                } else if Array(firstNumber.stringValue)[0] != "-" && (firstNumber.stringValue == "0"
+                } else if Array(firstNumber.stringValue.characters)[0] != "-" && (firstNumber.stringValue == "0"
                     || firstNumber.stringValue == "") {
                         firstNumber.stringValue = "-"
                         currentState = .fillingFirstNumber
@@ -333,8 +333,8 @@ public class Calculator {
             
         case .fillingFirstNumber:
             if firstNumber.isString == true {
-                if Array(firstNumber.stringValue)[0] == "-" {
-                    firstNumber.stringValue = dropFirst(firstNumber.stringValue)
+                if Array(firstNumber.stringValue.characters)[0] == "-" {
+                    firstNumber.stringValue = String(firstNumber.stringValue.characters.dropFirst())
                     // in swift 2.0  String(original.characters.dropFirst())
                     //or use x.removeAtIndex(x.startIndex)
                 } else if firstNumber.stringValue == "0" {
@@ -356,11 +356,11 @@ public class Calculator {
             
         case .fillingSecondNumber:
             if secondNumber.isString == true {
-                if Array(secondNumber.stringValue)[0] == "-" {
-                    secondNumber.stringValue = dropFirst(secondNumber.stringValue)
+                if Array(secondNumber.stringValue.characters)[0] == "-" {
+                    secondNumber.stringValue = String(secondNumber.stringValue.characters.dropFirst())
                     // in swift 2.0  String(original.characters.dropFirst())
                     //or use x.removeAtIndex(x.startIndex)
-                } else if Array(secondNumber.stringValue)[0] != "-" && secondNumber.stringValue == "0" {
+                } else if Array(secondNumber.stringValue.characters)[0] != "-" && secondNumber.stringValue == "0" {
                     secondNumber.stringValue = "-"
                 } else {
                     secondNumber.stringValue = "-" + secondNumber.stringValue
